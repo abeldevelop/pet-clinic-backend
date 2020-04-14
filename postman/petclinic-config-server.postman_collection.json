@@ -1,0 +1,28 @@
+{
+	"info": {
+		"_postman_id": "65e40f00-cb88-4f77-9bf4-441104375f15",
+		"name": "petclinic-config-server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Show Discovery Server Properties",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{config-server-url}}/petclinic-discovery-server/default",
+					"host": [
+						"{{config-server-url}}"
+					],
+					"path": [
+						"petclinic-discovery-server",
+						"default"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

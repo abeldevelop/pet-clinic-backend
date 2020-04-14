@@ -16,10 +16,8 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<!--<module>spring-libraries</module>-->
-		<!--<module>petclinic-starters</module>-->
-		<module>petclinic-servers</module>
-		<!--<module>petclinic-services</module>-->
+		<module>petclinic-config-server</module>
+		<module>petclinic-discovery-server</module>
 	</modules>
 
 	<properties>
