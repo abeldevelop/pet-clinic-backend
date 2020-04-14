@@ -1,11 +1,8 @@
 coverage:
-  precision: 2
-  round: down
-  range: "0...200"
-flags:
-  petclinicConfigServer:  
-    paths:
-      - petclinic-servers/petclinic-config-server/src
-  petclinicDiscoveryServer:
-    paths:
-      - petclinic-servers/petclinic-discovery-server/src
+  status:
+    patch: false
+
+  range: 20..90     # First number represents red, and second represents green
+                    # (default is 70..100)
+  round: down       # up, down, or nearest
+  precision: 2      # Number of decimal places, between 0 and 5
