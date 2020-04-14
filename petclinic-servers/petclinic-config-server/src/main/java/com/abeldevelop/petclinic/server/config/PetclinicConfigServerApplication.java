@@ -10,6 +10,7 @@ public class PetclinicConfigServerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PetclinicConfigServerApplication.class, args);
+		
 	}
 
 }
