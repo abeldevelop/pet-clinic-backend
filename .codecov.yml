@@ -1,19 +1,14 @@
 coverage:
-  status:
-    project:
-      target: 20%
-    petclinicConfigServer:
-      flags: 
-        - petclinicConfigServer
-      target: 20%
-    petclinicDiscoveryServer:
-      target: 20%
-      flags: 
-        - petclinicDiscoveryServer
+  range: 20..90     # First number represents red, and second represents green
+                    # (default is 70..100)
+  round: down       # up, down, or nearest
+  precision: 2      # Number of decimal places, between 0 and 5
+  
+  
 flags:
-  petclinicConfigServer:  
+  petclinic-config-server:
     paths:
       - petclinic-servers/petclinic-config-server/src
-  petclinicDiscoveryServer:
+  petclinic-discovery-server:
     paths:
       - petclinic-servers/petclinic-discovery-server/src
