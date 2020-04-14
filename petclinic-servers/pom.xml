@@ -16,6 +16,7 @@
 
 	<modules>
 		<module>petclinic-config-server</module>
+		<module>petclinic-discovery-server</module>
 	</modules>
 
 	<properties>
