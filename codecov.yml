@@ -1,0 +1,20 @@
+coverage:
+  status:
+    project:
+      target: 80%
+      threshold: 5%
+    petclinicConfigServer:
+      flags: 
+        - petclinicConfigServer
+      target: 80%
+    petclinicDiscoveryServer:
+      target: 80%
+      flags: 
+        - petclinicDiscoveryServer
+flags:
+  petclinicConfigServer:  
+    paths:
+      - petclinic-servers/petclinic-config-server/src
+  petclinicDiscoveryServer:
+    paths:
+      - petclinic-servers/petclinic-discovery-server/src
