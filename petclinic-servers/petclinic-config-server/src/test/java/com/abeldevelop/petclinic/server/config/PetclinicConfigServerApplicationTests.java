@@ -9,10 +9,5 @@ class PetclinicConfigServerApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-	
-	@Test
-	public void test() {
-		PetclinicConfigServerApplication.test();
-	}
 
 }

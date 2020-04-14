@@ -12,7 +12,4 @@ public class PetclinicConfigServerApplication {
 		SpringApplication.run(PetclinicConfigServerApplication.class, args);
 	}
 
-	public static void test() {
-		String a = "a";
-	}
 }
