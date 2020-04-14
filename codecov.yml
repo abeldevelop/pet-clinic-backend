@@ -1,14 +1,13 @@
 coverage:
   status:
     project:
-      target: 80%
-      threshold: 5%
+      target: 20%
     petclinicConfigServer:
       flags: 
         - petclinicConfigServer
-      target: 80%
+      target: 20%
     petclinicDiscoveryServer:
-      target: 80%
+      target: 20%
       flags: 
         - petclinicDiscoveryServer
 flags:
