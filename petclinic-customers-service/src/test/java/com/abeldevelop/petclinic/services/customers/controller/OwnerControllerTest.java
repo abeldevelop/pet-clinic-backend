@@ -22,6 +22,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.abeldevelop.petclinic.services.customers.generated.entity.OwnerEntity;
+import com.abeldevelop.petclinic.services.customers.generated.resource.ErrorResponseResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.OwnerRequestResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.OwnerResponseResource;
 import com.abeldevelop.petclinic.services.customers.objectmother.OwnerObjectMother;
@@ -130,6 +131,26 @@ public class OwnerControllerTest extends CommonTest {
 		assertEquals(ownerEntity.getAddress(), ownerResponseResource.getAddress());
 		assertEquals(ownerEntity.getCity(), ownerResponseResource.getCity());
 		assertEquals(ownerEntity.getTelephone(), ownerResponseResource.getTelephone());
+	}
+	
+	@Test
+	public void testFindOwnerByIdEndpointNotFound() throws Exception {
+		//given
+		ownerRepository.deleteAll();
+		
+		//when
+		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
+				get("/owners/{ownerId}", 1)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isNotFound())
+				.andReturn()
+				.getResponse();
+		mockHttpServletResponse.setCharacterEncoding("UTF-8");
+		
+		ErrorResponseResource errorResponseResource = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), ErrorResponseResource.class);
+		
+		//then
+		assertEquals("No exist Owner with ID: '1'", errorResponseResource.getMessage());
 	}
 	
 	@Test
