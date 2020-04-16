@@ -8,8 +8,4 @@ public class RequestValidationException extends RuntimeException {
 		super(message);
 	}
 	
-	public RequestValidationException(String message, Throwable cause) {
-		super(message, cause);
-	}
-	
 }

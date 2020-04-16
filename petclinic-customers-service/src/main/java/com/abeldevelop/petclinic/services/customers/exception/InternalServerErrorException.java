@@ -8,8 +8,4 @@ public class InternalServerErrorException extends RuntimeException {
 		super(message);
 	}
 	
-	public InternalServerErrorException(String message, Throwable cause) {
-		super(message, cause);
-	}
-	
 }
