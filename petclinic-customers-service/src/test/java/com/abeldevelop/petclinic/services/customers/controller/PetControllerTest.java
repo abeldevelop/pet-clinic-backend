@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.abeldevelop.petclinic.services.customers.generated.entity.OwnerEntity;
 import com.abeldevelop.petclinic.services.customers.generated.entity.PetEntity;
 import com.abeldevelop.petclinic.services.customers.generated.entity.PetTypeEntity;
+import com.abeldevelop.petclinic.services.customers.generated.resource.ErrorResponseResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetRequestResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetResponseResource;
 import com.abeldevelop.petclinic.services.customers.objectmother.OwnerObjectMother;
@@ -135,6 +136,29 @@ public class PetControllerTest extends CommonTest {
 		assertEquals(petEntity.getBirthDate(), petResponseResource.getBirthDate());
 		assertEquals(ownerEntity.getId(), petResponseResource.getOwnerId());
 		assertEquals(petEntity.getType().getId(), petResponseResource.getPetTypeId());
+	}
+	
+	@Test
+	public void testFindPetByIdEndpointNotFound() throws Exception {
+		//given
+		ownerRepository.deleteAll();
+		petTypeRepository.deleteAll();
+		OwnerEntity ownerEntity = ownerRepository.save(OwnerObjectMother.generateOwnerEntity());
+		
+		//when
+		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
+				get("/owners/{ownerId}/pets/{petId}", ownerEntity.getId(), 1)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isNotFound())
+				.andReturn()
+				.getResponse();
+		mockHttpServletResponse.setCharacterEncoding("UTF-8");
+		
+		ErrorResponseResource errorResponseResource = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), ErrorResponseResource.class);
+		
+		//then
+		assertEquals(true, errorResponseResource.getMessage().contains("No exist Pet with ID:"));
+		assertEquals(true, errorResponseResource.getMessage().contains("for Owner with ID:"));
 	}
 	
 	@Test
