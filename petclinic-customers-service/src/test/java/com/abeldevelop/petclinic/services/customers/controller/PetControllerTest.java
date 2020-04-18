@@ -79,6 +79,33 @@ public class PetControllerTest extends CommonTest {
 	}
 	
 	@Test
+	public void testCreatePetEndpointPetTypeNotFound() throws Exception {
+		//given
+		ownerRepository.deleteAll();
+		petTypeRepository.deleteAll();
+		OwnerEntity ownerEntity = ownerRepository.save(OwnerObjectMother.generateOwnerEntity());
+		PetTypeEntity petTypeEntity = PetTypeObjectMother.generatePetTypeEntity();
+		PetRequestResource petRequestResource = PetObjectMother.generatePetRequestResource();
+		petRequestResource.setTypeId(petTypeEntity.getId());
+		
+		//when
+		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
+				post("/owners/{ownerId}/pets", ownerEntity.getId())
+				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+				.content(convertObjectToJsonAsString(petRequestResource))
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isNotFound())
+				.andReturn()
+				.getResponse();
+		mockHttpServletResponse.setCharacterEncoding("UTF-8");
+		
+		ErrorResponseResource errorResponseResource = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), ErrorResponseResource.class);
+		
+		//then
+		assertEquals("No exist Pet Type with ID: '" + petTypeEntity.getId() + "'", errorResponseResource.getMessage());
+	}
+	
+	@Test
 	public void testUpdatePetEndpoint() throws Exception {
 		//given
 		ownerRepository.deleteAll();

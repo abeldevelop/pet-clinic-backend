@@ -137,10 +137,11 @@ public class OwnerControllerTest extends CommonTest {
 	public void testFindOwnerByIdEndpointNotFound() throws Exception {
 		//given
 		ownerRepository.deleteAll();
+		int ownerId = 1;
 		
 		//when
 		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				get("/owners/{ownerId}", 1)
+				get("/owners/{ownerId}", ownerId)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isNotFound())
 				.andReturn()
@@ -150,7 +151,7 @@ public class OwnerControllerTest extends CommonTest {
 		ErrorResponseResource errorResponseResource = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), ErrorResponseResource.class);
 		
 		//then
-		assertEquals("No exist Owner with ID: '1'", errorResponseResource.getMessage());
+		assertEquals("No exist Owner with ID: '" + ownerId + "'", errorResponseResource.getMessage());
 	}
 	
 	@Test
