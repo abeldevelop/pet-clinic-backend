@@ -19,6 +19,7 @@
 		<module>petclinic-config-server</module>
 		<module>petclinic-discovery-server</module>
 		<module>petclinic-customers-service</module>
+		<module>petclinic-vets-service</module>
 	</modules>
 
 	<properties>

@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: vets-service
+    
+  cloud:
+    config:
+      enabled: false
+      
+  zipkin:
+    enabled: false
