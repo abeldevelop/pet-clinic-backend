@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.abeldevelop.petclinic.services.vets.generated.entity.VetEntity;
+import com.abeldevelop.petclinic.services.vets.generated.resource.ErrorResponseResource;
 import com.abeldevelop.petclinic.services.vets.generated.resource.SpecialtyPaginationResponseResult;
 import com.abeldevelop.petclinic.services.vets.objectmother.VetObjectMother;
 import com.abeldevelop.petclinic.services.vets.repository.VetRepository;
@@ -47,6 +48,29 @@ public class SpecialtyControllerTest extends CommonTest {
 		
 		//then
 		assertEquals(1, result.getSpecialties().size());
+		
+	}
+	
+	@Test
+	public void testfindAllEndpointVetNotFound() throws Exception {
+		//given
+		vetRepository.deleteAll();
+		Integer vetId = 1;
+		
+		//when
+		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
+				get("/vets/{vetId}/specialties", vetId)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isNotFound())
+				.andReturn()
+				.getResponse();
+		
+		mockHttpServletResponse.setCharacterEncoding("UTF-8");
+
+		ErrorResponseResource result = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), ErrorResponseResource.class);
+		
+		//then
+		assertEquals("No exist vet with ID: '" + vetId + "'", result.getMessage());
 		
 	}
 }
