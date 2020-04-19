@@ -1,6 +1,6 @@
 spring:
   application:
-    name: vets-service
+    name: petclinic-vets-service
     
   cloud:
     config:

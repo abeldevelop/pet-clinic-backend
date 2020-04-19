@@ -1,6 +1,6 @@
 spring:
   application:
-    name: visits-service
+    name: petclinic-visits-service
     
   cloud:
     config:

@@ -2,7 +2,6 @@ package com.abeldevelop.petclinic.services.customers.controller;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abeldevelop.petclinic.services.customers.generated.api.PetApi;
@@ -20,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
 @Timed("petclinic.pet")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/owners/{ownerId}/pets")
 public class PetController implements PetApi {
 
 	private final PetService petService;
