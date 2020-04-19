@@ -93,7 +93,7 @@
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<configuration>
 					<excludes>
-						<exclude>com/abeldevelop/petclinic/services/vets/PetclinicVisitsServiceApplication.class</exclude>
+						<exclude>com/abeldevelop/petclinic/services/visits/PetclinicVisitsServiceApplication.class</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
