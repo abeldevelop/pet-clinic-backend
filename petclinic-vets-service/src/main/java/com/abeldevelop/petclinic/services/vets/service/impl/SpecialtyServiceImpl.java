@@ -3,6 +3,7 @@ package com.abeldevelop.petclinic.services.vets.service.impl;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.abeldevelop.petclinic.services.vets.exception.NotFoundException;
 import com.abeldevelop.petclinic.services.vets.generated.resource.SpecialtyPaginationResponseResult;
@@ -20,6 +21,7 @@ public class SpecialtyServiceImpl implements SpecialtyService {
 	private final SpecialtyMapper specialtyMapper;
 	
 	@Override
+	@Transactional(readOnly = true)
 	public SpecialtyPaginationResponseResult findAll(Integer vetId) {
 		return SpecialtyPaginationResponseResult.builder()
 				.specialties(

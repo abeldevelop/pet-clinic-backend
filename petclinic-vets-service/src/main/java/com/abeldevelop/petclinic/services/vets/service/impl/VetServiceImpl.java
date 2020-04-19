@@ -3,6 +3,7 @@ package com.abeldevelop.petclinic.services.vets.service.impl;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.abeldevelop.petclinic.services.vets.generated.resource.VetPaginationResponseResult;
 import com.abeldevelop.petclinic.services.vets.mapper.VetMapper;
@@ -19,6 +20,7 @@ public class VetServiceImpl implements VetService {
 	private final VetMapper vetMapper;
 	
 	@Override
+	@Transactional(readOnly = true)
 	public VetPaginationResponseResult findAll() {
 		return VetPaginationResponseResult.builder()
 				.vets(
