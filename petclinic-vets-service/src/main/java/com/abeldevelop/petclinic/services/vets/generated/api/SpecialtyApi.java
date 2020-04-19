@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.abeldevelop.petclinic.services.vets.generated.resource.SpecialtyPaginationResponseResult;
 
-@RequestMapping("/{vetId}/specialties")
+@RequestMapping("/vets/{vetId}/specialties")
 public interface SpecialtyApi {
 
 	@GetMapping
