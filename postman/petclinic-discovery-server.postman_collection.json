@@ -1,0 +1,28 @@
+{
+	"info": {
+		"_postman_id": "b557cafd-7b59-49f2-85a2-2551ef74632f",
+		"name": "petclinic-discovery-server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Query for all instances",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{petclinic-discovery-server-url}}/eureka/apps",
+					"host": [
+						"{{petclinic-discovery-server-url}}"
+					],
+					"path": [
+						"eureka",
+						"apps"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

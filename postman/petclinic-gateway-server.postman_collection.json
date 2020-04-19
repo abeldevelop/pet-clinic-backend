@@ -1,0 +1,633 @@
+{
+	"info": {
+		"_postman_id": "3b5d30cb-1a8d-4347-98fd-2191b8f93b04",
+		"name": "petclinic-gateway-server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "petclinic-customers-service",
+			"item": [
+				{
+					"name": "owners",
+					"item": [
+						{
+							"name": "Create Owner",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petclinic-gateway-server-url}}/api/customers/owners",
+									"host": [
+										"{{petclinic-gateway-server-url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"owners"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Owner",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "f7cf095b-44b3-4595-9f8a-e5c5e3987370",
+										"exec": [
+											"let ownerId = 1;",
+											"pm.environment.set(\"ownerId\", 1);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "e19dc26c-630e-4d33-9371-618dbad3c38e",
+										"exec": [
+											"pm.environment.unset(\"ownerId\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petclinic-gateway-server-url}}/api/customers/owners/{{ownerId}}",
+									"host": [
+										"{{petclinic-gateway-server-url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"owners",
+										"{{ownerId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find Owner by ID",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "c3bf37be-cd22-443a-b8dc-6d8c4158b4d9",
+										"exec": [
+											"let ownerId = 1;",
+											"pm.environment.set(\"ownerId\", 1);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "7bb7b49c-8c1d-497d-9674-28596d1c5e20",
+										"exec": [
+											"pm.environment.unset(\"ownerId\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petclinic-gateway-server-url}}/api/customers/owners/{{ownerId}}",
+									"host": [
+										"{{petclinic-gateway-server-url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"owners",
+										"{{ownerId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find All Owners",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petclinic-gateway-server-url}}/api/customers/owners",
+									"host": [
+										"{{petclinic-gateway-server-url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"owners"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "pet",
+					"item": [
+						{
+							"name": "Create Pet",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "7ce92978-829f-42b6-bd29-6239f29f2e56",
+										"exec": [
+											"let ownerId = 1;",
+											"pm.environment.set(\"ownerId\", 1);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "91ee0f4a-58e9-4830-8aba-58e988ded118",
+										"exec": [
+											"pm.environment.unset(\"ownerId\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petclinic-gateway-server-url}}/api/customers/owners/{{ownerId}}/pets",
+									"host": [
+										"{{petclinic-gateway-server-url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"owners",
+										"{{ownerId}}",
+										"pets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Pet",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "7ce92978-829f-42b6-bd29-6239f29f2e56",
+										"exec": [
+											"let ownerId = 1;",
+											"pm.environment.set(\"ownerId\", 1);",
+											"",
+											"let petId = 1;",
+											"pm.environment.set(\"petId\", 1);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "91ee0f4a-58e9-4830-8aba-58e988ded118",
+										"exec": [
+											"pm.environment.unset(\"ownerId\");",
+											"pm.environment.unset(\"petId\");",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petclinic-gateway-server-url}}/api/customers/owners/{{ownerId}}/pets/{{petId}}",
+									"host": [
+										"{{petclinic-gateway-server-url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"owners",
+										"{{ownerId}}",
+										"pets",
+										"{{petId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find Pet By ID",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "7ce92978-829f-42b6-bd29-6239f29f2e56",
+										"exec": [
+											"let ownerId = 1;",
+											"pm.environment.set(\"ownerId\", 1);",
+											"",
+											"let petId = 1;",
+											"pm.environment.set(\"petId\", 1);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "91ee0f4a-58e9-4830-8aba-58e988ded118",
+										"exec": [
+											"pm.environment.unset(\"ownerId\");",
+											"pm.environment.unset(\"petId\");",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petclinic-gateway-server-url}}/api/customers/owners/{{ownerId}}/pets/{{petId}}",
+									"host": [
+										"{{petclinic-gateway-server-url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"owners",
+										"{{ownerId}}",
+										"pets",
+										"{{petId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find All Pets",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "7ce92978-829f-42b6-bd29-6239f29f2e56",
+										"exec": [
+											"let ownerId = 1;",
+											"pm.environment.set(\"ownerId\", 1);",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "91ee0f4a-58e9-4830-8aba-58e988ded118",
+										"exec": [
+											"pm.environment.unset(\"ownerId\");",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petclinic-gateway-server-url}}/api/customers/owners/{{ownerId}}/pets",
+									"host": [
+										"{{petclinic-gateway-server-url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"owners",
+										"{{ownerId}}",
+										"pets"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "petType",
+					"item": [
+						{
+							"name": "Find All PetTypes",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "7ce92978-829f-42b6-bd29-6239f29f2e56",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "91ee0f4a-58e9-4830-8aba-58e988ded118",
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petclinic-gateway-server-url}}/api/customers/petTypes",
+									"host": [
+										"{{petclinic-gateway-server-url}}"
+									],
+									"path": [
+										"api",
+										"customers",
+										"petTypes"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "petclinic-vets-service",
+			"item": [
+				{
+					"name": "vets",
+					"item": [
+						{
+							"name": "Find All Vets",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{petclinic-gateway-server-url}}/api/vets",
+									"host": [
+										"{{petclinic-gateway-server-url}}"
+									],
+									"path": [
+										"api",
+										"vets"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "specialties",
+					"item": [
+						{
+							"name": "Find All Specialties",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "5a2fd5d9-181e-4f6a-ba80-2ef5f603719a",
+										"exec": [
+											"let vetId = 3;",
+											"pm.environment.set(\"vetId\", vetId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "1abb0bcc-4215-4c1b-8862-f3a538953293",
+										"exec": [
+											"pm.environment.unset(\"vetId\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{petclinic-gateway-server-url}}/api/vets/{{vetId}}/specialties",
+									"host": [
+										"{{petclinic-gateway-server-url}}"
+									],
+									"path": [
+										"api",
+										"vets",
+										"{{vetId}}",
+										"specialties"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "petclinic-visits-service",
+			"item": [
+				{
+					"name": "visits",
+					"item": [
+						{
+							"name": "Find All Visits",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "5a2fd5d9-181e-4f6a-ba80-2ef5f603719a",
+										"exec": [
+											"let ownerId = 1;",
+											"pm.environment.set(\"ownerId\", ownerId);",
+											"",
+											"let petId = 7;",
+											"pm.environment.set(\"petId\", petId);"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "1abb0bcc-4215-4c1b-8862-f3a538953293",
+										"exec": [
+											"pm.environment.unset(\"ownerId\");",
+											"pm.environment.unset(\"petId\");",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{petclinic-gateway-server-url}}/api/visits/owners/{{ownerId}}/pets/{{petId}}/visits",
+									"host": [
+										"{{petclinic-gateway-server-url}}"
+									],
+									"path": [
+										"api",
+										"visits",
+										"owners",
+										"{{ownerId}}",
+										"pets",
+										"{{petId}}",
+										"visits"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

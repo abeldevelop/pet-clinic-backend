@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: petclinic-gateway-server
+    
+  cloud:
+    config:
+      enabled: false

@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: petclinic-discovery-server
+    
+  cloud:
+    config:
+      enabled: false
