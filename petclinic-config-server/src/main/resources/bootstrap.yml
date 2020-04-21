@@ -8,3 +8,5 @@ spring:
       server:
         git:
           uri: https://github.com/abeldevelop/pet-clinic-config-repository
+          search-paths:
+          - '{application}'

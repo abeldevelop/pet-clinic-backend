@@ -4,12 +4,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.abeldevelop.petclinic.services.vets.config.VetsProperties;
 
 @EnableDiscoveryClient
-@SpringBootApplication
+@ComponentScan("com.abeldevelop.petclinic")
 @EnableConfigurationProperties(VetsProperties.class)
+@SpringBootApplication
 public class PetclinicVetsServiceApplication {
 
 	public static void main(String[] args) {

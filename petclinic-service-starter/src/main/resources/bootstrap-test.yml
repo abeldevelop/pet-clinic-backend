@@ -1,0 +1,1 @@
+spring:  cloud:    config:      enabled: false        zipkin:    enabled: false        eureka:  client:    enabled: false

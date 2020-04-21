@@ -11,11 +11,15 @@
 
 	<groupId>com.abeldevelop.petclinic</groupId>
 	<artifactId>petclinic-parent</artifactId>
-	<version>1.0.0.RELEASE</version>
+	<version>1.1.0.RELEASE</version>
 
 	<packaging>pom</packaging>
 
 	<modules>
+		<module>petclinic-common-library</module>
+		<module>petclinic-test-library</module>
+		<module>petclinic-service-starter</module>
+		<module>petclinic-service-test-starter</module>
 		<module>petclinic-config-server</module>
 		<module>petclinic-discovery-server</module>
 		<module>petclinic-admin-server</module>
@@ -48,6 +52,42 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<!-- Pet Clinic -->
+			<dependency>
+				<groupId>com.abeldevelop.petclinic.libraries</groupId>
+				<artifactId>petclinic-common-library</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.abeldevelop.petclinic.libraries</groupId>
+				<artifactId>petclinic-test-library</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.abeldevelop.petclinic.starters</groupId>
+				<artifactId>petclinic-service-starter</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.abeldevelop.petclinic.starters</groupId>
+				<artifactId>petclinic-service-test-starter</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<!-- Spring Boot -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-test</artifactId>
+				<version>${spring-boot.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.junit.vintage</groupId>
+						<artifactId>junit-vintage-engine</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			
+			<!-- Spring Cloud -->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
@@ -55,6 +95,8 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			
+			<!-- Third parties -->
 			<dependency>
 				<groupId>de.codecentric</groupId>
 				<artifactId>spring-boot-admin-dependencies</artifactId>
@@ -94,6 +136,11 @@
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>
 					<version>${jacoco-maven-plugin.version}</version>
+					<configuration>
+						<excludes>
+							<exclude>com/abeldevelop/petclinic/**/Petclinic*Application.class</exclude>
+						</excludes>
+					</configuration>
 					<executions>
 						<execution>
 							<goals>

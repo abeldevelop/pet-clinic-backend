@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.abeldevelop.petclinic.services.vets.exception.NotFoundException;
+import com.abeldevelop.petclinic.library.common.exception.NotFoundException;
 import com.abeldevelop.petclinic.services.vets.generated.resource.SpecialtyPaginationResponseResult;
 import com.abeldevelop.petclinic.services.vets.mapper.SpecialtyMapper;
 import com.abeldevelop.petclinic.services.vets.repository.VetRepository;
