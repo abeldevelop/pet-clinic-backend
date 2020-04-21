@@ -1,13 +1,9 @@
 package com.abeldevelop.petclinic.server.admin;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+//@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class PetclinicAdminServerApplicationTests {
 
-	@Test
+//	@Test
 	void contextLoads() {
 	}
 
