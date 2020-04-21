@@ -16,6 +16,12 @@
 	</properties>
 
 	<dependencies>
+		<!-- Pet Clinic -->
+		<dependency>
+			<groupId>com.abeldevelop.petclinic.libraries</groupId>
+			<artifactId>petclinic-common-library</artifactId>
+		</dependency>
+		
 		<!-- Spring Boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

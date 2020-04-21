@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.abeldevelop.petclinic.services.customers.exception.NotFoundException;
+import com.abeldevelop.petclinic.library.common.exception.NotFoundException;
 import com.abeldevelop.petclinic.services.customers.generated.entity.PetEntity;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetRequestResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetResponseResource;

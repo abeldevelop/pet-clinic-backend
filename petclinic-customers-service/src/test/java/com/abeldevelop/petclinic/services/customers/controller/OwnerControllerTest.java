@@ -21,8 +21,8 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.abeldevelop.petclinic.library.common.resources.ErrorResponseResource;
 import com.abeldevelop.petclinic.services.customers.generated.entity.OwnerEntity;
-import com.abeldevelop.petclinic.services.customers.generated.resource.ErrorResponseResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.OwnerRequestResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.OwnerResponseResource;
 import com.abeldevelop.petclinic.services.customers.objectmother.OwnerObjectMother;

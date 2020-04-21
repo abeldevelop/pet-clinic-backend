@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.abeldevelop.petclinic.library.common.util.LoggerUtils;
 import com.abeldevelop.petclinic.services.customers.generated.api.OwnerApi;
 import com.abeldevelop.petclinic.services.customers.generated.resource.OwnerRequestResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.OwnerResponseResource;
 import com.abeldevelop.petclinic.services.customers.service.OwnerService;
-import com.abeldevelop.petclinic.services.customers.util.LoggerUtils;
 import com.abeldevelop.petclinic.services.customers.validation.OwnerValidator;
 
 import io.micrometer.core.annotation.Timed;

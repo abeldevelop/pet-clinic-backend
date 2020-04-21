@@ -3,7 +3,7 @@ package com.abeldevelop.petclinic.services.customers.validation;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.abeldevelop.petclinic.services.customers.exception.RequestValidationException;
+import com.abeldevelop.petclinic.library.common.exception.RequestValidationException;
 import com.abeldevelop.petclinic.services.customers.generated.resource.OwnerRequestResource;
 
 @Component
