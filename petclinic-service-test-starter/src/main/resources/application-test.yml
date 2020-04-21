@@ -7,10 +7,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-      
-eureka:
-  client:
-    enabled: false
 
 
 logging:
