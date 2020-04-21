@@ -17,6 +17,7 @@
 
 	<modules>
 		<module>petclinic-common-library</module>
+		<module>petclinic-test-library</module>
 		<module>petclinic-service-starter</module>
 		<module>petclinic-service-test-starter</module>
 		<module>petclinic-config-server</module>
@@ -55,6 +56,11 @@
 			<dependency>
 				<groupId>com.abeldevelop.petclinic.libraries</groupId>
 				<artifactId>petclinic-common-library</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.abeldevelop.petclinic.libraries</groupId>
+				<artifactId>petclinic-test-library</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

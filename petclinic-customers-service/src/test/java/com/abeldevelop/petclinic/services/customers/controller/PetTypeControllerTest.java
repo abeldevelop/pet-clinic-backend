@@ -16,11 +16,11 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import com.abeldevelop.petclinic.library.test.CommonTest;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetTypeResponseResource;
 import com.abeldevelop.petclinic.services.customers.objectmother.PetTypeObjectMother;
 import com.abeldevelop.petclinic.services.customers.repository.OwnerRepository;
 import com.abeldevelop.petclinic.services.customers.repository.PetTypeRepository;
-import com.abeldevelop.petclinic.services.customers.util.CommonTest;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

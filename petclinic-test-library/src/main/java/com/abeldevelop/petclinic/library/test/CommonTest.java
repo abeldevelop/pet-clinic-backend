@@ -1,4 +1,4 @@
-package com.abeldevelop.petclinic.services.vets.util;
+package com.abeldevelop.petclinic.library.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;

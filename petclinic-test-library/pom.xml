@@ -9,36 +9,40 @@
 		<version>1.1.0-SNAPSHOT</version>
 	</parent>
 	
-	<groupId>com.abeldevelop.petclinic.starters</groupId>
-	<artifactId>petclinic-service-test-starter</artifactId>
+	<groupId>com.abeldevelop.petclinic.libraries</groupId>
+	<artifactId>petclinic-test-library</artifactId>
 
 	<properties>
 	</properties>
 
 	<dependencies>
-		<!-- Pet Clinic -->
+		<!-- Java -->
+
+
+		<!-- Spring -->
 		<dependency>
-			<groupId>com.abeldevelop.petclinic.libraries</groupId>
-			<artifactId>petclinic-test-library</artifactId>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
 		</dependency>
 		
 		<!-- Spring Boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-json</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.junit.vintage</groupId>
-					<artifactId>junit-vintage-engine</artifactId>
-				</exclusion>
-			</exclusions>
+			<scope>test</scope>
 		</dependency>
 		
 		<!-- Third parties -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-		</dependency>
+		
+
 	</dependencies>
 
 	<build>
