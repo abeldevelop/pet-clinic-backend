@@ -4,6 +4,10 @@ import org.slf4j.Logger;
 
 public class LoggerUtils {
 
+	private LoggerUtils() {
+		
+	}
+	
 	public static void trace(Logger logger, String message) {
 		if(logger.isTraceEnabled()) {
 			logger.trace(message);
