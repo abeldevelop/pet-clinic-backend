@@ -1,6 +1,5 @@
 package com.abeldevelop.petclinic.services.customers.service.impl;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -8,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.abeldevelop.petclinic.library.common.exception.NotFoundException;
 import com.abeldevelop.petclinic.services.customers.generated.entity.PetEntity;
+import com.abeldevelop.petclinic.services.customers.generated.resource.PetPaginationResponseResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetRequestResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetResponseResource;
 import com.abeldevelop.petclinic.services.customers.mapper.PetMapper;
@@ -65,8 +65,10 @@ public class PetServiceImpl implements PetService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<PetResponseResource> findAll(Integer ownerId) {
-		return petRepository.findByOwner(ownerService.findOwnerById(ownerId)).stream().map(petMapper::map).collect(Collectors.toList());
+	public PetPaginationResponseResource findAll(Integer ownerId) {
+		return PetPaginationResponseResource.builder()
+				.pets(petRepository.findByOwner(ownerService.findOwnerById(ownerId)).stream().map(petMapper::map).collect(Collectors.toList()))
+				.build();
 	}
 
 }

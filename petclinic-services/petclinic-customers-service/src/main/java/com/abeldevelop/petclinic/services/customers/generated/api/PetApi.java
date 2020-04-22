@@ -1,7 +1,5 @@
 package com.abeldevelop.petclinic.services.customers.generated.api;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.abeldevelop.petclinic.services.customers.generated.resource.PetPaginationResponseResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetRequestResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetResponseResource;
 
@@ -31,6 +30,6 @@ public interface PetApi {
     public PetResponseResource findById(@PathVariable("ownerId") Integer ownerId, @PathVariable("petId") Integer petId);
 
     @GetMapping
-    public List<PetResponseResource> findAll(@PathVariable("ownerId") Integer ownerId);
+    public PetPaginationResponseResource findAll(@PathVariable("ownerId") Integer ownerId);
     
 }

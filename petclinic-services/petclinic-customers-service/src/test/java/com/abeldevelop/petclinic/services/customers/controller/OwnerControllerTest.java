@@ -2,28 +2,22 @@ package com.abeldevelop.petclinic.services.customers.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.abeldevelop.petclinic.library.common.resources.ErrorResponseResource;
 import com.abeldevelop.petclinic.library.test.CommonTest;
+import com.abeldevelop.petclinic.library.test.domain.RequestCall;
+import com.abeldevelop.petclinic.library.test.domain.ResponseCall;
 import com.abeldevelop.petclinic.services.customers.generated.entity.OwnerEntity;
+import com.abeldevelop.petclinic.services.customers.generated.resource.OwnerPaginationResponseResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.OwnerRequestResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.OwnerResponseResource;
 import com.abeldevelop.petclinic.services.customers.objectmother.OwnerObjectMother;
@@ -44,25 +38,20 @@ public class OwnerControllerTest extends CommonTest {
 		OwnerRequestResource ownerRequestResource = OwnerObjectMother.generateOwnerRequestResource();
 		
 		//when
-		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				post("/owners")
-				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-				.content(convertObjectToJsonAsString(ownerRequestResource))
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isCreated())
-				.andReturn()
-				.getResponse();
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-		
-		OwnerResponseResource ownerResponseResource = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), OwnerResponseResource.class);
+		ResponseCall<OwnerResponseResource> response = makePostCall(RequestCall.builder()
+				.endpoint("/owners")
+				.body(ownerRequestResource)
+				.build(), 
+				OwnerResponseResource.class);
 		
 		//then
-		assertNotNull(ownerResponseResource.getId());
-		assertEquals(ownerRequestResource.getFirstName(), ownerResponseResource.getFirstName());
-		assertEquals(ownerRequestResource.getLastName(), ownerResponseResource.getLastName());
-		assertEquals(ownerRequestResource.getAddress(), ownerResponseResource.getAddress());
-		assertEquals(ownerRequestResource.getCity(), ownerResponseResource.getCity());
-		assertEquals(ownerRequestResource.getTelephone(), ownerResponseResource.getTelephone());
+		assertEquals(HttpStatus.CREATED, response.getStatus());
+		assertNotNull(response.getBody().getId());
+		assertEquals(ownerRequestResource.getFirstName(), response.getBody().getFirstName());
+		assertEquals(ownerRequestResource.getLastName(), response.getBody().getLastName());
+		assertEquals(ownerRequestResource.getAddress(), response.getBody().getAddress());
+		assertEquals(ownerRequestResource.getCity(), response.getBody().getCity());
+		assertEquals(ownerRequestResource.getTelephone(), response.getBody().getTelephone());
 	}
 	
 	@Test
@@ -73,14 +62,15 @@ public class OwnerControllerTest extends CommonTest {
 		OwnerRequestResource ownerRequestResource = OwnerObjectMother.generateOwnerRequestResourceFromOwnerEntity(ownerEntity);
 		
 		//when
-		mvc.perform(
-				put("/owners/{ownerId}", ownerEntity.getId())
-				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-				.content(convertObjectToJsonAsString(ownerRequestResource))
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isNoContent());
+		ResponseCall<Void> response = makePutCall(RequestCall.builder()
+				.endpoint("/owners/{ownerId}")
+				.pathParam(ownerEntity.getId())
+				.body(ownerRequestResource)
+				.build(), 
+				Void.class);
 		
 		//then
+		assertEquals(HttpStatus.NO_CONTENT, response.getStatus());
 		OwnerEntity ownerEntityInDataBase = ownerRepository.findById(ownerEntity.getId()).orElseThrow(() -> new Exception("Error in Test"));
 		assertEquals(ownerEntity.getId(), ownerEntityInDataBase.getId());
 		assertEquals(ownerEntity.getFirstName() + "Updated", ownerEntityInDataBase.getFirstName());
@@ -97,13 +87,15 @@ public class OwnerControllerTest extends CommonTest {
 		OwnerEntity ownerEntity = ownerRepository.save(OwnerObjectMother.generateOwnerEntity());
 		
 		//when
-		mvc.perform(
-	            delete("/owners/{ownerId}", ownerEntity.getId())
-	            .accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isNoContent());
+		ResponseCall<Void> response = makeDeleteCall(RequestCall.builder()
+				.endpoint("/owners/{ownerId}")
+				.pathParam(ownerEntity.getId())
+				.build(), 
+				Void.class);
 		
 		//then
 		Optional<OwnerEntity> ownerEntityInDataBase = ownerRepository.findById(ownerEntity.getId());
+		assertEquals(HttpStatus.NO_CONTENT, response.getStatus());
 		assertEquals(false, ownerEntityInDataBase.isPresent());
 	}
 	
@@ -114,23 +106,20 @@ public class OwnerControllerTest extends CommonTest {
 		OwnerEntity ownerEntity = ownerRepository.save(OwnerObjectMother.generateOwnerEntity());
 		
 		//when
-		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				get("/owners/{ownerId}", ownerEntity.getId())
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andReturn()
-				.getResponse();
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-		
-		OwnerResponseResource ownerResponseResource = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), OwnerResponseResource.class);
+		ResponseCall<OwnerResponseResource> response = makeGetCall(RequestCall.builder()
+				.endpoint("/owners/{ownerId}")
+				.pathParam(ownerEntity.getId())
+				.build(), 
+				OwnerResponseResource.class);
 		
 		//then
-		assertEquals(ownerEntity.getId(), ownerResponseResource.getId());
-		assertEquals(ownerEntity.getFirstName(), ownerResponseResource.getFirstName());
-		assertEquals(ownerEntity.getLastName(), ownerResponseResource.getLastName());
-		assertEquals(ownerEntity.getAddress(), ownerResponseResource.getAddress());
-		assertEquals(ownerEntity.getCity(), ownerResponseResource.getCity());
-		assertEquals(ownerEntity.getTelephone(), ownerResponseResource.getTelephone());
+		assertEquals(HttpStatus.OK, response.getStatus());
+		assertEquals(ownerEntity.getId(), response.getBody().getId());
+		assertEquals(ownerEntity.getFirstName(), response.getBody().getFirstName());
+		assertEquals(ownerEntity.getLastName(), response.getBody().getLastName());
+		assertEquals(ownerEntity.getAddress(), response.getBody().getAddress());
+		assertEquals(ownerEntity.getCity(), response.getBody().getCity());
+		assertEquals(ownerEntity.getTelephone(), response.getBody().getTelephone());
 	}
 	
 	@Test
@@ -140,18 +129,15 @@ public class OwnerControllerTest extends CommonTest {
 		int ownerId = 1;
 		
 		//when
-		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				get("/owners/{ownerId}", ownerId)
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isNotFound())
-				.andReturn()
-				.getResponse();
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-		
-		ErrorResponseResource errorResponseResource = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), ErrorResponseResource.class);
+		ResponseCall<ErrorResponseResource> response = makeGetCall(RequestCall.builder()
+				.endpoint("/owners/{ownerId}")
+				.pathParam(ownerId)
+				.build(), 
+				ErrorResponseResource.class);
 		
 		//then
-		assertEquals("No exist Owner with ID: '" + ownerId + "'", errorResponseResource.getMessage());
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatus());
+		assertEquals("No exist Owner with ID: '" + ownerId + "'", response.getBody().getMessage());
 	}
 	
 	@Test
@@ -161,18 +147,14 @@ public class OwnerControllerTest extends CommonTest {
 		ownerRepository.save(OwnerObjectMother.generateOwnerEntity());
 		
 		//when
-		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				get("/owners")
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andReturn()
-				.getResponse();
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-		
-		List<OwnerResponseResource> result = Arrays.asList(convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), OwnerResponseResource[].class));
+		ResponseCall<OwnerPaginationResponseResource> response = makeGetCall(RequestCall.builder()
+				.endpoint("/owners")
+				.build(), 
+				OwnerPaginationResponseResource.class);
 		
 		//then
-		assertEquals(1, result.size());
+		assertEquals(HttpStatus.OK, response.getStatus());
+		assertEquals(1, response.getBody().getOwners().size());
 	}
 	
 	

@@ -1,11 +1,12 @@
 package com.abeldevelop.petclinic.services.customers.controller;
 
-import java.util.List;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abeldevelop.petclinic.library.common.util.LoggerUtils;
 import com.abeldevelop.petclinic.services.customers.generated.api.PetApi;
+import com.abeldevelop.petclinic.services.customers.generated.resource.PetPaginationResponseResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetRequestResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetResponseResource;
 import com.abeldevelop.petclinic.services.customers.service.PetService;
@@ -25,6 +26,7 @@ public class PetController implements PetApi {
 	private final PetValidator petValidator;
 	
 	@Override
+	@ResponseStatus(HttpStatus.CREATED)
     public PetResponseResource create(Integer ownerId, PetRequestResource petRequestResource) {
 		LoggerUtils.info(log, "PetController.create Data IN => ownerId: {}, petRequestResource: {}", ownerId, petRequestResource);
 		petValidator.validate(petRequestResource);
@@ -32,6 +34,7 @@ public class PetController implements PetApi {
     }
 	
 	@Override
+	@ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(Integer ownerId, Integer petId, PetRequestResource petRequestResource) {
 		LoggerUtils.info(log, "PetController.update Data IN => ownerId: {}, petId: {}, petRequestResource: {}", ownerId, petId, petRequestResource);
 		petValidator.validate(petRequestResource);
@@ -45,7 +48,7 @@ public class PetController implements PetApi {
     }
 
 	@Override
-    public List<PetResponseResource> findAll(Integer ownerId) {
+    public PetPaginationResponseResource findAll(Integer ownerId) {
     	LoggerUtils.info(log, "PetController.findAll Data IN => ownerId: {}", ownerId);
         return petService.findAll(ownerId);
     }

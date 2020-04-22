@@ -1,23 +1,18 @@
 package com.abeldevelop.petclinic.services.customers.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-
-import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.abeldevelop.petclinic.library.test.CommonTest;
-import com.abeldevelop.petclinic.services.customers.generated.resource.PetTypeResponseResource;
+import com.abeldevelop.petclinic.library.test.domain.RequestCall;
+import com.abeldevelop.petclinic.library.test.domain.ResponseCall;
+import com.abeldevelop.petclinic.services.customers.generated.resource.PetTypePaginationResponseResource;
 import com.abeldevelop.petclinic.services.customers.objectmother.PetTypeObjectMother;
 import com.abeldevelop.petclinic.services.customers.repository.OwnerRepository;
 import com.abeldevelop.petclinic.services.customers.repository.PetTypeRepository;
@@ -41,19 +36,13 @@ public class PetTypeControllerTest extends CommonTest {
 		petTypeRepository.save(PetTypeObjectMother.generatePetTypeEntity());
 		
 		//when
-		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				get("/petTypes")
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andReturn()
-				.getResponse();
-		
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-		
-		List<PetTypeResponseResource> result = Arrays.asList(convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), PetTypeResponseResource[].class));
+		ResponseCall<PetTypePaginationResponseResource> response = makeGetCall(RequestCall.builder()
+				.endpoint("/petTypes")
+				.build(), 
+				PetTypePaginationResponseResource.class);
 		
 		//then
-		assertEquals(1, result.size());
+		assertEquals(1, response.getBody().getPetTypes().size());
 	}
 	
 }

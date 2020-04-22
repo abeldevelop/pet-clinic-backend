@@ -2,28 +2,22 @@ package com.abeldevelop.petclinic.services.customers.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-
-import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.abeldevelop.petclinic.library.common.resources.ErrorResponseResource;
 import com.abeldevelop.petclinic.library.test.CommonTest;
+import com.abeldevelop.petclinic.library.test.domain.RequestCall;
+import com.abeldevelop.petclinic.library.test.domain.ResponseCall;
 import com.abeldevelop.petclinic.services.customers.generated.entity.OwnerEntity;
 import com.abeldevelop.petclinic.services.customers.generated.entity.PetEntity;
 import com.abeldevelop.petclinic.services.customers.generated.entity.PetTypeEntity;
+import com.abeldevelop.petclinic.services.customers.generated.resource.PetPaginationResponseResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetRequestResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetResponseResource;
 import com.abeldevelop.petclinic.services.customers.objectmother.OwnerObjectMother;
@@ -58,24 +52,20 @@ public class PetControllerTest extends CommonTest {
 		petRequestResource.setTypeId(petTypeEntity.getId());
 		
 		//when
-		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				post("/owners/{ownerId}/pets", ownerEntity.getId())
-				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-				.content(convertObjectToJsonAsString(petRequestResource))
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isCreated())
-				.andReturn()
-				.getResponse();
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-		
-		PetResponseResource petResponseResource = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), PetResponseResource.class);
+		ResponseCall<PetResponseResource> response = makePostCall(RequestCall.builder()
+				.endpoint("/owners/{ownerId}/pets")
+				.pathParam(ownerEntity.getId())
+				.body(petRequestResource)
+				.build(), 
+				PetResponseResource.class);
 		
 		//then
-		assertNotNull(petResponseResource.getId());
-		assertEquals(petRequestResource.getName(), petResponseResource.getName());
-		assertEquals(petRequestResource.getBirthDate(), petResponseResource.getBirthDate());
-		assertEquals(ownerEntity.getId(), petResponseResource.getOwnerId());
-		assertEquals(petTypeEntity.getId(), petResponseResource.getPetTypeId());
+		assertEquals(HttpStatus.CREATED, response.getStatus());
+		assertNotNull(response.getBody().getId());
+		assertEquals(petRequestResource.getName(), response.getBody().getName());
+		assertEquals(petRequestResource.getBirthDate(), response.getBody().getBirthDate());
+		assertEquals(ownerEntity.getId(), response.getBody().getOwnerId());
+		assertEquals(petTypeEntity.getId(), response.getBody().getPetTypeId());
 	}
 	
 	@Test
@@ -89,20 +79,16 @@ public class PetControllerTest extends CommonTest {
 		petRequestResource.setTypeId(petTypeEntity.getId());
 		
 		//when
-		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				post("/owners/{ownerId}/pets", ownerEntity.getId())
-				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-				.content(convertObjectToJsonAsString(petRequestResource))
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isNotFound())
-				.andReturn()
-				.getResponse();
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-		
-		ErrorResponseResource errorResponseResource = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), ErrorResponseResource.class);
+		ResponseCall<ErrorResponseResource> response = makePostCall(RequestCall.builder()
+				.endpoint("/owners/{ownerId}/pets")
+				.pathParam(ownerEntity.getId())
+				.body(petRequestResource)
+				.build(), 
+				ErrorResponseResource.class);
 		
 		//then
-		assertEquals("No exist Pet Type with ID: '" + petTypeEntity.getId() + "'", errorResponseResource.getMessage());
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatus());
+		assertEquals("No exist Pet Type with ID: '" + petTypeEntity.getId() + "'", response.getBody().getMessage());
 	}
 	
 	@Test
@@ -121,14 +107,15 @@ public class PetControllerTest extends CommonTest {
 		petRequestResource.setTypeId(petTypeEntity.getId());
 		
 		//when
-		mvc.perform(
-				put("/owners/{ownerId}/pets/{petId}", ownerEntity.getId(), petEntity.getId())
-				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-				.content(convertObjectToJsonAsString(petRequestResource))
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isNoContent());
+		ResponseCall<Void> response = makePutCall(RequestCall.builder()
+				.endpoint("/owners/{ownerId}/pets/{petId}")
+				.pathParam(ownerEntity.getId()).pathParam(petEntity.getId())
+				.body(petRequestResource)
+				.build(), 
+				Void.class);
 		
 		//then
+		assertEquals(HttpStatus.NO_CONTENT, response.getStatus());
 		PetEntity petEntityInDataBase = petRepository.findById(petEntity.getId()).orElseThrow(() -> new Exception("Error in Test"));
 		assertEquals(petEntity.getId(), petEntityInDataBase.getId());
 		assertEquals(petEntity.getName() + "Updated", petEntityInDataBase.getName());
@@ -147,22 +134,19 @@ public class PetControllerTest extends CommonTest {
 		petEntity = petRepository.save(petEntity);
 		
 		//when
-		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				get("/owners/{ownerId}/pets/{petId}", ownerEntity.getId(), petEntity.getId())
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andReturn()
-				.getResponse();
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-		
-		PetResponseResource petResponseResource = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), PetResponseResource.class);
+		ResponseCall<PetResponseResource> response = makeGetCall(RequestCall.builder()
+				.endpoint("/owners/{ownerId}/pets/{petId}")
+				.pathParam(ownerEntity.getId()).pathParam(petEntity.getId())
+				.build(), 
+				PetResponseResource.class);
 		
 		//then
-		assertEquals(petEntity.getId(), petResponseResource.getId());
-		assertEquals(petEntity.getName(), petResponseResource.getName());
-		assertEquals(petEntity.getBirthDate(), petResponseResource.getBirthDate());
-		assertEquals(ownerEntity.getId(), petResponseResource.getOwnerId());
-		assertEquals(petEntity.getType().getId(), petResponseResource.getPetTypeId());
+		assertEquals(HttpStatus.OK, response.getStatus());
+		assertEquals(petEntity.getId(), response.getBody().getId());
+		assertEquals(petEntity.getName(), response.getBody().getName());
+		assertEquals(petEntity.getBirthDate(), response.getBody().getBirthDate());
+		assertEquals(ownerEntity.getId(), response.getBody().getOwnerId());
+		assertEquals(petEntity.getType().getId(), response.getBody().getPetTypeId());
 	}
 	
 	@Test
@@ -173,19 +157,16 @@ public class PetControllerTest extends CommonTest {
 		OwnerEntity ownerEntity = ownerRepository.save(OwnerObjectMother.generateOwnerEntity());
 		
 		//when
-		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				get("/owners/{ownerId}/pets/{petId}", ownerEntity.getId(), 1)
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isNotFound())
-				.andReturn()
-				.getResponse();
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-		
-		ErrorResponseResource errorResponseResource = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), ErrorResponseResource.class);
+		ResponseCall<ErrorResponseResource> response = makeGetCall(RequestCall.builder()
+				.endpoint("/owners/{ownerId}/pets/{petId}")
+				.pathParam(ownerEntity.getId()).pathParam(1)
+				.build(), 
+				ErrorResponseResource.class);
 		
 		//then
-		assertEquals(true, errorResponseResource.getMessage().contains("No exist Pet with ID:"));
-		assertEquals(true, errorResponseResource.getMessage().contains("for Owner with ID:"));
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatus());
+		assertEquals(true, response.getBody().getMessage().contains("No exist Pet with ID:"));
+		assertEquals(true, response.getBody().getMessage().contains("for Owner with ID:"));
 	}
 	
 	@Test
@@ -201,17 +182,14 @@ public class PetControllerTest extends CommonTest {
 		petEntity = petRepository.save(petEntity);
 		
 		//when
-		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				get("/owners/{ownerId}/pets", petEntity.getOwner().getId())
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andReturn()
-				.getResponse();
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-		
-		List<PetResponseResource> result = Arrays.asList(convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), PetResponseResource[].class));
+		ResponseCall<PetPaginationResponseResource> response = makeGetCall(RequestCall.builder()
+				.endpoint("/owners/{ownerId}/pets")
+				.pathParam(ownerEntity.getId())
+				.build(), 
+				PetPaginationResponseResource.class);
 		
 		//then
-		assertEquals(1, result.size());
+		assertEquals(HttpStatus.OK, response.getStatus());
+		assertEquals(1, response.getBody().getPets().size());
 	}
 }

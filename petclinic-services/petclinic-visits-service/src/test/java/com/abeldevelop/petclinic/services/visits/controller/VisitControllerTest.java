@@ -2,21 +2,18 @@ package com.abeldevelop.petclinic.services.visits.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.abeldevelop.petclinic.library.test.CommonTest;
+import com.abeldevelop.petclinic.library.test.domain.RequestCall;
+import com.abeldevelop.petclinic.library.test.domain.ResponseCall;
 import com.abeldevelop.petclinic.services.visits.generated.resource.VisitPaginationResponseResource;
 import com.abeldevelop.petclinic.services.visits.generated.resource.VisitRequestResource;
 import com.abeldevelop.petclinic.services.visits.generated.resource.VisitResponseResource;
@@ -40,23 +37,19 @@ public class VisitControllerTest extends CommonTest {
 		Integer petId = 1;
 		
 		//when
-		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				post("/owners/{ownerId}/pets/{petId}/visits", ownerId, petId)
-				.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
-				.content(convertObjectToJsonAsString(visitRequestResource))
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isCreated())
-				.andReturn()
-				.getResponse();
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-		
-		VisitResponseResource visitResponseResource = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), VisitResponseResource.class);
+		ResponseCall<VisitResponseResource> response = makePostCall(RequestCall.builder()
+				.endpoint("/owners/{ownerId}/pets/{petId}/visits")
+				.pathParam(ownerId).pathParam(petId)
+				.body(visitRequestResource)
+				.build(), 
+				VisitResponseResource.class);
 		
 		//then
-		assertNotNull(visitResponseResource.getId());
-		assertEquals(visitRequestResource.getDate(), visitResponseResource.getDate());
-		assertEquals(visitRequestResource.getDescription(), visitResponseResource.getDescription());
-		assertEquals(petId, visitResponseResource.getPetId());
+		assertEquals(HttpStatus.CREATED, response.getStatus());
+		assertNotNull(response.getBody().getId());
+		assertEquals(visitRequestResource.getDate(), response.getBody().getDate());
+		assertEquals(visitRequestResource.getDescription(), response.getBody().getDescription());
+		assertEquals(petId, response.getBody().getPetId());
 		
 	}
 	
@@ -69,19 +62,15 @@ public class VisitControllerTest extends CommonTest {
 		Integer petId = 1;
 		
 		//when
-		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				get("/owners/{ownerId}/pets/{petId}/visits", ownerId, petId)
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andReturn()
-				.getResponse();
-		
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-
-		VisitPaginationResponseResource result = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), VisitPaginationResponseResource.class);
+		ResponseCall<VisitPaginationResponseResource> response = makeGetCall(RequestCall.builder()
+				.endpoint("/owners/{ownerId}/pets/{petId}/visits")
+				.pathParam(ownerId).pathParam(petId)
+				.build(), 
+				VisitPaginationResponseResource.class);
 		
 		//then
-		assertEquals(1, result.getVisits().size());
+		assertEquals(HttpStatus.OK, response.getStatus());
+		assertEquals(1, response.getBody().getVisits().size());
 	}
 	
 }

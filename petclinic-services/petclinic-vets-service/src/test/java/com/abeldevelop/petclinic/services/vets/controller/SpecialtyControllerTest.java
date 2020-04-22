@@ -1,20 +1,19 @@
 package com.abeldevelop.petclinic.services.vets.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.abeldevelop.petclinic.library.common.resources.ErrorResponseResource;
 import com.abeldevelop.petclinic.library.test.CommonTest;
+import com.abeldevelop.petclinic.library.test.domain.RequestCall;
+import com.abeldevelop.petclinic.library.test.domain.ResponseCall;
 import com.abeldevelop.petclinic.services.vets.generated.entity.VetEntity;
 import com.abeldevelop.petclinic.services.vets.generated.resource.SpecialtyPaginationResponseResult;
 import com.abeldevelop.petclinic.services.vets.objectmother.VetObjectMother;
@@ -35,19 +34,15 @@ public class SpecialtyControllerTest extends CommonTest {
 		VetEntity vetEntity = vetRepository.save(VetObjectMother.generateVetEntityWithoutId());
 		
 		//when
-		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				get("/vets/{vetId}/specialties", vetEntity.getId())
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andReturn()
-				.getResponse();
-		
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-
-		SpecialtyPaginationResponseResult result = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), SpecialtyPaginationResponseResult.class);
+		ResponseCall<SpecialtyPaginationResponseResult> response = makeGetCall(RequestCall.builder()
+				.endpoint("/vets/{vetId}/specialties")
+				.pathParam(vetEntity.getId())
+				.build(), 
+				SpecialtyPaginationResponseResult.class);
 		
 		//then
-		assertEquals(1, result.getSpecialties().size());
+		assertEquals(HttpStatus.OK, response.getStatus());
+		assertEquals(1, response.getBody().getSpecialties().size());
 		
 	}
 	
@@ -58,19 +53,15 @@ public class SpecialtyControllerTest extends CommonTest {
 		Integer vetId = 1;
 		
 		//when
-		MockHttpServletResponse mockHttpServletResponse = mvc.perform(
-				get("/vets/{vetId}/specialties", vetId)
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(MockMvcResultMatchers.status().isNotFound())
-				.andReturn()
-				.getResponse();
-		
-		mockHttpServletResponse.setCharacterEncoding("UTF-8");
-
-		ErrorResponseResource result = convertJsonAsStringToObject(mockHttpServletResponse.getContentAsString(), ErrorResponseResource.class);
+		ResponseCall<ErrorResponseResource> response = makeGetCall(RequestCall.builder()
+				.endpoint("/vets/{vetId}/specialties")
+				.pathParam(vetId)
+				.build(), 
+				ErrorResponseResource.class);
 		
 		//then
-		assertEquals("No exist vet with ID: '" + vetId + "'", result.getMessage());
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatus());
+		assertEquals("No exist vet with ID: '" + vetId + "'", response.getBody().getMessage());
 		
 	}
 }
