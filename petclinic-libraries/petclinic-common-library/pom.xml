@@ -9,7 +9,6 @@
 		<version>1.2.0-SNAPSHOT</version>
 	</parent>
 	
-	<groupId>com.abeldevelop.petclinic.libraries</groupId>
 	<artifactId>petclinic-common-library</artifactId>
 
 	<properties>
