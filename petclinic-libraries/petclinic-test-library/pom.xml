@@ -4,29 +4,25 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-		<groupId>com.abeldevelop.petclinic</groupId>
-		<artifactId>petclinic-parent</artifactId>
+		<groupId>com.abeldevelop.petclinic.libraries</groupId>
+		<artifactId>petclinic-libraries-parent</artifactId>
 		<version>1.2.0-SNAPSHOT</version>
 	</parent>
 	
 	<groupId>com.abeldevelop.petclinic.libraries</groupId>
-	<artifactId>petclinic-common-library</artifactId>
+	<artifactId>petclinic-test-library</artifactId>
 
 	<properties>
 	</properties>
 
 	<dependencies>
 		<!-- Java -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<scope>provided</scope>
-		</dependency>
+
 
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
+			<artifactId>spring-test</artifactId>
 		</dependency>
 		
 		<!-- Spring Boot -->

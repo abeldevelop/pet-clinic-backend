@@ -16,17 +16,10 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>petclinic-common-library</module>
-		<module>petclinic-test-library</module>
-		<module>petclinic-service-starter</module>
-		<module>petclinic-service-test-starter</module>
-		<module>petclinic-config-server</module>
-		<module>petclinic-discovery-server</module>
-		<module>petclinic-admin-server</module>
-		<module>petclinic-gateway-server</module>
-		<module>petclinic-customers-service</module>
-		<module>petclinic-vets-service</module>
-		<module>petclinic-visits-service</module>
+		<module>petclinic-libraries</module>
+		<module>petclinic-starters</module>
+		<module>petclinic-servers</module>
+		<module>petclinic-services</module>
 	</modules>
 
 	<properties>

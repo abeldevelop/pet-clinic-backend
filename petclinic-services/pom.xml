@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.abeldevelop.petclinic</groupId>
+		<artifactId>petclinic-parent</artifactId>
+		<version>1.2.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.abeldevelop.petclinic.services</groupId>
+	<artifactId>petclinic-services-parent</artifactId>
+	<version>1.2.0-SNAPSHOT</version>
+
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>petclinic-customers-service</module>
+		<module>petclinic-vets-service</module>
+		<module>petclinic-visits-service</module>
+	</modules>
+
+</project>

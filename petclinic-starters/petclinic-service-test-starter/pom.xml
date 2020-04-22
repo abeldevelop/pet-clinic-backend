@@ -4,32 +4,28 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<parent>
-		<groupId>com.abeldevelop.petclinic</groupId>
-		<artifactId>petclinic-parent</artifactId>
+		<groupId>com.abeldevelop.petclinic.starters</groupId>
+		<artifactId>petclinic-starters-parent</artifactId>
 		<version>1.2.0-SNAPSHOT</version>
 	</parent>
 	
-	<groupId>com.abeldevelop.petclinic.servers</groupId>
-	<artifactId>petclinic-discovery-server</artifactId>
+	<groupId>com.abeldevelop.petclinic.starters</groupId>
+	<artifactId>petclinic-service-test-starter</artifactId>
 
 	<properties>
 	</properties>
 
 	<dependencies>
+		<!-- Pet Clinic -->
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+			<groupId>com.abeldevelop.petclinic.libraries</groupId>
+			<artifactId>petclinic-test-library</artifactId>
 		</dependency>
 		
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency>
-
+		<!-- Spring Boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
 			<exclusions>
 				<exclusion>
 					<groupId>org.junit.vintage</groupId>
@@ -37,22 +33,19 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<!-- Third parties -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>com/abeldevelop/petclinic/server/discovery/PetclinicDiscoveryServerApplication.class</exclude>
-					</excludes>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
