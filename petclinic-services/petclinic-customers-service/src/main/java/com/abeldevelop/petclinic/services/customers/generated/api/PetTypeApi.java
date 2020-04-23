@@ -9,6 +9,6 @@ import com.abeldevelop.petclinic.services.customers.generated.resource.PetTypePa
 public interface PetTypeApi {
 
 	@GetMapping
-    public PetTypePaginationResponseResource findAll();
+    public PetTypePaginationResponseResource executeFindAllPetTypes();
 	
 }

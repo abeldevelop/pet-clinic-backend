@@ -1,5 +1,7 @@
 package com.abeldevelop.petclinic.services.customers.generated.resource;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,13 +15,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class OwnerResponseResource {
+public class CustomerPaginationResponseResource {
 
-    private Integer id;
-    private String firstName;
-    private String lastName;
-    private String address;
-    private String city;
-    private String telephone;
+    private List<CustomerResponseResource> customers;
     
 }

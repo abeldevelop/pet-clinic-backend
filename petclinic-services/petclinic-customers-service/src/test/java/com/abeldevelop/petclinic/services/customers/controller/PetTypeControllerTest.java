@@ -14,8 +14,8 @@ import com.abeldevelop.petclinic.library.test.domain.RequestCall;
 import com.abeldevelop.petclinic.library.test.domain.ResponseCall;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetTypePaginationResponseResource;
 import com.abeldevelop.petclinic.services.customers.objectmother.PetTypeObjectMother;
-import com.abeldevelop.petclinic.services.customers.repository.OwnerRepository;
-import com.abeldevelop.petclinic.services.customers.repository.PetTypeRepository;
+import com.abeldevelop.petclinic.services.customers.repository.springdata.CustomerSpringDataRepository;
+import com.abeldevelop.petclinic.services.customers.repository.springdata.PetTypeSpringDataRepository;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -23,17 +23,17 @@ import com.abeldevelop.petclinic.services.customers.repository.PetTypeRepository
 public class PetTypeControllerTest extends CommonTest {
 
 	@Autowired
-	private OwnerRepository ownerRepository;
+	private CustomerSpringDataRepository customerSpringDataRepository;
 	
 	@Autowired
-	private PetTypeRepository petTypeRepository;
+	private PetTypeSpringDataRepository petTypeSpringDataRepository;
 	
 	@Test
 	public void testFindAllPetTypesEndpoint() throws Exception {
 		//given
-		ownerRepository.deleteAll();
-		petTypeRepository.deleteAll();
-		petTypeRepository.save(PetTypeObjectMother.generatePetTypeEntity());
+		customerSpringDataRepository.deleteAll();
+		petTypeSpringDataRepository.deleteAll();
+		petTypeSpringDataRepository.save(PetTypeObjectMother.generatePetTypeEntity());
 		
 		//when
 		ResponseCall<PetTypePaginationResponseResource> response = makeGetCall(RequestCall.builder()

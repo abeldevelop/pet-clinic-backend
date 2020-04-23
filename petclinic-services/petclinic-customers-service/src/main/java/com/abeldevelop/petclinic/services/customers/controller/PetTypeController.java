@@ -20,8 +20,8 @@ public class PetTypeController implements PetTypeApi {
 	private final PetTypeService petTypeService;
 	
 	@Override
-    public PetTypePaginationResponseResource findAll() {
-		LoggerUtils.info(log, "PetTypeController.findAllPetTypes Data IN => ");
-        return petTypeService.findAll();
+	public PetTypePaginationResponseResource executeFindAllPetTypes() {
+		LoggerUtils.info(log, "PetTypeController.executeFindAllPetTypes Data IN => ");
+        return petTypeService.executeFindAll();
     }
 }

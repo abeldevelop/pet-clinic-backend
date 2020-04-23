@@ -1,7 +1,5 @@
 package com.abeldevelop.petclinic.services.customers.generated.api;
 
-import javax.validation.Valid;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,21 +13,21 @@ import com.abeldevelop.petclinic.services.customers.generated.resource.PetPagina
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetRequestResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetResponseResource;
 
-@RequestMapping("/owners/{ownerId}/pets")
+@RequestMapping("/customers/{identificationDocument}/pets")
 public interface PetApi {
 
 	@PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PetResponseResource create(@PathVariable("ownerId") Integer ownerId, @Valid @RequestBody PetRequestResource petRequestResource);
+    public PetResponseResource executeCreatePet(@PathVariable("identificationDocument") String identificationDocument, @RequestBody PetRequestResource petRequestResource);
 	
 	@PutMapping("/{petId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable("ownerId") Integer ownerId, @PathVariable("petId") Integer petId, @Valid @RequestBody PetRequestResource petRequestResource);
+    public void executeUpdatePet(@PathVariable("identificationDocument") String identificationDocument, @PathVariable("petId") Integer petId, @RequestBody PetRequestResource petRequestResource);
 
     @GetMapping("/{petId}")
-    public PetResponseResource findById(@PathVariable("ownerId") Integer ownerId, @PathVariable("petId") Integer petId);
+    public PetResponseResource executeFindPetById(@PathVariable("identificationDocument") String identificationDocument, @PathVariable("petId") Integer petId);
 
     @GetMapping
-    public PetPaginationResponseResource findAll(@PathVariable("ownerId") Integer ownerId);
+    public PetPaginationResponseResource executeFindAllPets(@PathVariable("identificationDocument") String identificationDocument);
     
 }

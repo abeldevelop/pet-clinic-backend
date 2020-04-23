@@ -5,27 +5,28 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.abeldevelop.petclinic.services.customers.generated.entity.OwnerEntity;
-import com.abeldevelop.petclinic.services.customers.generated.resource.OwnerRequestResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.OwnerResponseResource;
-import com.abeldevelop.petclinic.services.customers.objectmother.OwnerObjectMother;
+import com.abeldevelop.petclinic.services.customers.generated.entity.CustomerEntity;
+import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerCreateRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerUpdateRequestResource;
+import com.abeldevelop.petclinic.services.customers.objectmother.CustomerObjectMother;
 
-public class OwnerMapperTest {
+public class CustomerMapperTest {
 
-	private OwnerMapper ownerMapper;
+	private CustomerMapper ownerMapper;
 	
 	@BeforeEach
 	public void setUp() {
-		ownerMapper = new OwnerMapper();
+		ownerMapper = new CustomerMapper();
 	}
 	
 	@Test
 	public void mapOwnerRequestResourceToOwnerEntity() {
 		//given
-		OwnerRequestResource ownerRequestResource = OwnerObjectMother.generateOwnerRequestResource();
+		CustomerCreateRequestResource ownerRequestResource = CustomerObjectMother.generateCustomerCreateRequestResource();
 		
 		//when
-		OwnerEntity ownerEntity = ownerMapper.map(ownerRequestResource);
+		CustomerEntity ownerEntity = ownerMapper.map(ownerRequestResource);
 		
 		//then
 		assertEquals(ownerRequestResource.getFirstName(), ownerEntity.getFirstName());
@@ -38,10 +39,10 @@ public class OwnerMapperTest {
 	@Test
 	public void mapOwnerEntityToOwnerResponseResource() {
 		//given
-		OwnerEntity ownerEntity = OwnerObjectMother.generateOwnerEntity();
+		CustomerEntity ownerEntity = CustomerObjectMother.generateCustomerEntity();
 		
 		//when
-		OwnerResponseResource ownerResponseResource = ownerMapper.map(ownerEntity);
+		CustomerResponseResource ownerResponseResource = ownerMapper.map(ownerEntity);
 		
 		//then
 		assertEquals(ownerEntity.getId(), ownerResponseResource.getId());
@@ -55,11 +56,11 @@ public class OwnerMapperTest {
 	@Test
 	public void mapOwnerEntityAndOwnerRequestResourceToOwnerEntity() {
 		//given
-		OwnerEntity ownerEntity = OwnerObjectMother.generateOwnerEntity();
-		OwnerRequestResource ownerRequestResource = OwnerObjectMother.generateOwnerRequestResource();
+		CustomerEntity ownerEntity = CustomerObjectMother.generateCustomerEntity();
+		CustomerUpdateRequestResource ownerRequestResource = CustomerObjectMother.generateCustomerUpdateRequestResource();
 		
 		//when
-		OwnerEntity ownerEntityResult = ownerMapper.map(OwnerObjectMother.generateOwnerEntity(), ownerRequestResource);
+		CustomerEntity ownerEntityResult = ownerMapper.map(CustomerObjectMother.generateCustomerEntity(), ownerRequestResource);
 		
 		//then
 		assertEquals(ownerEntity.getId(), ownerEntityResult.getId());

@@ -1,9 +1,14 @@
 package com.abeldevelop.petclinic.services.customers.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+import java.util.Optional;
 
 import com.abeldevelop.petclinic.services.customers.generated.entity.PetTypeEntity;
 
-public interface PetTypeRepository extends JpaRepository<PetTypeEntity, Integer> {
+public interface PetTypeRepository {
 
+	public List<PetTypeEntity> executeFindAll();
+	
+	public Optional<PetTypeEntity> executeFindById(Integer petTypeId);
+	
 }

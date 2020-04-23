@@ -27,29 +27,29 @@ public class PetController implements PetApi {
 	
 	@Override
 	@ResponseStatus(HttpStatus.CREATED)
-    public PetResponseResource create(Integer ownerId, PetRequestResource petRequestResource) {
-		LoggerUtils.info(log, "PetController.create Data IN => ownerId: {}, petRequestResource: {}", ownerId, petRequestResource);
+	public PetResponseResource executeCreatePet(String identificationDocument, PetRequestResource petRequestResource) {
+		LoggerUtils.info(log, "PetController.executeCreatePet Data IN => identificationDocument: {}, petRequestResource: {}", identificationDocument, petRequestResource);
 		petValidator.validate(petRequestResource);
-		return petService.create(ownerId, petRequestResource);
+		return petService.executeCreate(identificationDocument, petRequestResource);
     }
 	
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(Integer ownerId, Integer petId, PetRequestResource petRequestResource) {
-		LoggerUtils.info(log, "PetController.update Data IN => ownerId: {}, petId: {}, petRequestResource: {}", ownerId, petId, petRequestResource);
+	public void executeUpdatePet(String identificationDocument, Integer petId, PetRequestResource petRequestResource) {
+		LoggerUtils.info(log, "PetController.executeUpdatePet Data IN => identificationDocument: {}, petId: {}, petRequestResource: {}", identificationDocument, petId, petRequestResource);
 		petValidator.validate(petRequestResource);
-		petService.update(ownerId, petId, petRequestResource);
+		petService.executeUpdate(identificationDocument, petId, petRequestResource);
     }
 
 	@Override
-    public PetResponseResource findById(Integer ownerId, Integer petId) {
-    	LoggerUtils.info(log, "PetController.findById Data IN => ownerId: {}, petId: {}", ownerId, petId);
-        return petService.findById(ownerId, petId);
+	public PetResponseResource executeFindPetById(String identificationDocument, Integer petId) {
+    	LoggerUtils.info(log, "PetController.executeFindPetById Data IN => identificationDocument: {}, petId: {}", identificationDocument, petId);
+        return petService.executeFindById(identificationDocument, petId);
     }
 
 	@Override
-    public PetPaginationResponseResource findAll(Integer ownerId) {
-    	LoggerUtils.info(log, "PetController.findAll Data IN => ownerId: {}", ownerId);
-        return petService.findAll(ownerId);
+	public PetPaginationResponseResource executeFindAllPets(String identificationDocument) {
+    	LoggerUtils.info(log, "PetController.executeFindAllPets Data IN => identificationDocument: {}", identificationDocument);
+        return petService.executeFindAll(identificationDocument);
     }
 }

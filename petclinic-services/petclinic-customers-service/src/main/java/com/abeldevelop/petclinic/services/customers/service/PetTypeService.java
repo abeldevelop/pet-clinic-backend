@@ -1,11 +1,9 @@
 package com.abeldevelop.petclinic.services.customers.service;
 
-import com.abeldevelop.petclinic.services.customers.generated.entity.PetTypeEntity;
 import com.abeldevelop.petclinic.services.customers.generated.resource.PetTypePaginationResponseResource;
 
 public interface PetTypeService {
 
-	public PetTypePaginationResponseResource findAll();
+	public PetTypePaginationResponseResource executeFindAll();
 	
-	public PetTypeEntity findPetTypeById(Integer petTypeId);
 }

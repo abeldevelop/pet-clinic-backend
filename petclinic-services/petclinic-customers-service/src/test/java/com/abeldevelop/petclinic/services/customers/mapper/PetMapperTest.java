@@ -45,7 +45,7 @@ public class PetMapperTest {
 		assertEquals(petEntity.getName(), petResponseResource.getName());
 		assertEquals(petEntity.getBirthDate(), petResponseResource.getBirthDate());
 		assertEquals(petEntity.getType().getId(), petResponseResource.getPetTypeId());
-		assertEquals(petEntity.getOwner().getId(), petResponseResource.getOwnerId());
+		assertEquals(petEntity.getCustomer().getId(), petResponseResource.getCustomerId());
 		
 	}
 	

@@ -15,6 +15,7 @@ public class PetObjectMother {
 		return PetRequestResource.builder()
 				.name("namePetRequestResource")
 				.birthDate(LocalDate.of(2020, 4, 15))
+				.typeId(1)
 				.build();
 	}
 	
@@ -24,7 +25,7 @@ public class PetObjectMother {
 			    .name("nameEntity")
 			    .birthDate(LocalDate.of(2020, 4, 16))
 			    .type(PetTypeObjectMother.generatePetTypeEntity())
-			    .owner(OwnerObjectMother.generateOwnerEntity())
+			    .customer(CustomerObjectMother.generateCustomerEntity())
 				.build();
 	}
 	

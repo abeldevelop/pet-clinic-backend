@@ -25,7 +25,7 @@ public class PetMapper {
 			   .name(petEntity.getName())
 			   .birthDate(petEntity.getBirthDate())
 			   .petTypeId(petEntity.getType().getId())
-			   .ownerId(petEntity.getOwner().getId())
+			   .customerId(petEntity.getCustomer().getId())
 			   .build();
 	}
 	

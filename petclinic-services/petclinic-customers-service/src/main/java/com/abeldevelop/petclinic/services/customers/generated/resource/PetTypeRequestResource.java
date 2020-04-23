@@ -13,12 +13,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class OwnerRequestResource {
+public class PetTypeRequestResource {
 
-    private String firstName;
-    private String lastName;
-    private String address;
-    private String city;
-    private String telephone;
+    private Integer id;
+    private String name;
     
 }

@@ -10,13 +10,10 @@ import com.abeldevelop.petclinic.services.customers.generated.resource.PetReques
 public class PetValidator {
 
 	public void validate(PetRequestResource petRequestResource) {
-		if(petRequestResource == null) {
-			throw new RequestValidationException("The body is mandatory");
-		}
 		if(StringUtils.isEmpty(petRequestResource.getName())) {
 			throw new RequestValidationException("The name is mandatory");
 		}
-		if(StringUtils.isEmpty(petRequestResource.getTypeId())) {
+		if(petRequestResource.getTypeId() == null) {
 			throw new RequestValidationException("The typeId is mandatory");
 		}
 	}

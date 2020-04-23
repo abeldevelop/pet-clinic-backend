@@ -32,17 +32,18 @@ public class PetEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
     @ManyToOne
-    @JoinColumn(name = "type_id")
+    @JoinColumn(name = "type_id", nullable = false)
     private PetTypeEntity type;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private OwnerEntity owner;
+    @JoinColumn(name = "customer_id", nullable = false)
+    private CustomerEntity customer;
+    
 }
