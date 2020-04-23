@@ -11,8 +11,6 @@ public interface CustomerRepository {
 	
 	public void executeDelete(CustomerEntity customerEntity);
 	
-	public Optional<CustomerEntity> executeFindById(Integer customerId);
-
 	public Optional<CustomerEntity> executeFindByIdentificationDocument(String identificationDocument);
 	
 	public List<CustomerEntity> executeFindAll();
