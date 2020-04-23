@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class CustomerController implements CustomerApi {
 
-	private final CustomerService ownerService;
+	private final CustomerService customerService;
 	private final CustomerValidator customerValidator;
 
 	@Override
@@ -31,7 +31,7 @@ public class CustomerController implements CustomerApi {
 	public CustomerResponseResource executeCreateCustomer(CustomerCreateRequestResource customerCreateRequestResource) {
 		LoggerUtils.info(log, "CustomerController.executeCreateCustomer Data IN => customerCreateRequestResource: {}", customerCreateRequestResource);
 		customerValidator.validate(customerCreateRequestResource);
-        return ownerService.executeCreate(customerCreateRequestResource);
+        return customerService.executeCreate(customerCreateRequestResource);
     }
 	
 	@Override
@@ -39,25 +39,25 @@ public class CustomerController implements CustomerApi {
 	public void executeUpdateCustomer(String identificationDocument, CustomerUpdateRequestResource customerUpdateRequestResource) {
 		LoggerUtils.info(log, "CustomerController.executeUpdateCustomer Data IN => identificationDocument: {}, customerUpdateRequestResource: {}", identificationDocument, customerUpdateRequestResource);
 		customerValidator.validate(customerUpdateRequestResource);
-		ownerService.executeUpdate(identificationDocument, customerUpdateRequestResource);
+		customerService.executeUpdate(identificationDocument, customerUpdateRequestResource);
 	}
 	
 	@Override
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void executeDeleteCustomer(String identificationDocument) {
 		LoggerUtils.info(log, "CustomerController.executeDeleteCustomer Data IN => identificationDocument: {}", identificationDocument);
-		ownerService.executeDelete(identificationDocument);
+		customerService.executeDelete(identificationDocument);
 	}
 
 	@Override
 	public CustomerResponseResource executeFindCustomerByIdentificationDocument(String identificationDocument) {
 		LoggerUtils.info(log, "CustomerController.executeFindCustomerByIdentificationDocument Data IN => identificationDocument: {}", identificationDocument);
-        return ownerService.executeFindByIdentificationDocument(identificationDocument);
+        return customerService.executeFindByIdentificationDocument(identificationDocument);
     }
 
 	@Override
 	public CustomerPaginationResponseResource findAllCustomers() {
 		LoggerUtils.info(log, "CustomerController.findAllCustomers Data IN => ");
-        return ownerService.executeFindAll();
+        return customerService.executeFindAll();
     }
 }

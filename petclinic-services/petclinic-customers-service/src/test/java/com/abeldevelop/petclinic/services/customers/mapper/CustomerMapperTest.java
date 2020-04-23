@@ -13,62 +13,62 @@ import com.abeldevelop.petclinic.services.customers.objectmother.CustomerObjectM
 
 public class CustomerMapperTest {
 
-	private CustomerMapper ownerMapper;
+	private CustomerMapper customerMapper;
 	
 	@BeforeEach
 	public void setUp() {
-		ownerMapper = new CustomerMapper();
+		customerMapper = new CustomerMapper();
 	}
 	
 	@Test
-	public void mapOwnerRequestResourceToOwnerEntity() {
+	public void mapCustomerRequestResourceToCustomerEntity() {
 		//given
-		CustomerCreateRequestResource ownerRequestResource = CustomerObjectMother.generateCustomerCreateRequestResource();
+		CustomerCreateRequestResource customerRequestResource = CustomerObjectMother.generateCustomerCreateRequestResource();
 		
 		//when
-		CustomerEntity ownerEntity = ownerMapper.map(ownerRequestResource);
+		CustomerEntity customerEntity = customerMapper.map(customerRequestResource);
 		
 		//then
-		assertEquals(ownerRequestResource.getFirstName(), ownerEntity.getFirstName());
-		assertEquals(ownerRequestResource.getLastName(), ownerEntity.getLastName());
-		assertEquals(ownerRequestResource.getAddress(), ownerEntity.getAddress());
-		assertEquals(ownerRequestResource.getCity(), ownerEntity.getCity());
-		assertEquals(ownerRequestResource.getTelephone(), ownerEntity.getTelephone());
+		assertEquals(customerRequestResource.getFirstName(), customerEntity.getFirstName());
+		assertEquals(customerRequestResource.getLastName(), customerEntity.getLastName());
+		assertEquals(customerRequestResource.getAddress(), customerEntity.getAddress());
+		assertEquals(customerRequestResource.getCity(), customerEntity.getCity());
+		assertEquals(customerRequestResource.getTelephone(), customerEntity.getTelephone());
 	}
 	
 	@Test
-	public void mapOwnerEntityToOwnerResponseResource() {
+	public void mapCustomerEntityToCustomerResponseResource() {
 		//given
-		CustomerEntity ownerEntity = CustomerObjectMother.generateCustomerEntity();
+		CustomerEntity customerEntity = CustomerObjectMother.generateCustomerEntity();
 		
 		//when
-		CustomerResponseResource ownerResponseResource = ownerMapper.map(ownerEntity);
+		CustomerResponseResource customerResponseResource = customerMapper.map(customerEntity);
 		
 		//then
-		assertEquals(ownerEntity.getId(), ownerResponseResource.getId());
-		assertEquals(ownerEntity.getFirstName(), ownerResponseResource.getFirstName());
-		assertEquals(ownerEntity.getLastName(), ownerResponseResource.getLastName());
-		assertEquals(ownerEntity.getAddress(), ownerResponseResource.getAddress());
-		assertEquals(ownerEntity.getCity(), ownerResponseResource.getCity());
-		assertEquals(ownerEntity.getTelephone(), ownerResponseResource.getTelephone());
+		assertEquals(customerEntity.getId(), customerResponseResource.getId());
+		assertEquals(customerEntity.getFirstName(), customerResponseResource.getFirstName());
+		assertEquals(customerEntity.getLastName(), customerResponseResource.getLastName());
+		assertEquals(customerEntity.getAddress(), customerResponseResource.getAddress());
+		assertEquals(customerEntity.getCity(), customerResponseResource.getCity());
+		assertEquals(customerEntity.getTelephone(), customerResponseResource.getTelephone());
 	}
 	
 	@Test
-	public void mapOwnerEntityAndOwnerRequestResourceToOwnerEntity() {
+	public void mapCustomerEntityAndCustomerRequestResourceToCustomerEntity() {
 		//given
-		CustomerEntity ownerEntity = CustomerObjectMother.generateCustomerEntity();
-		CustomerUpdateRequestResource ownerRequestResource = CustomerObjectMother.generateCustomerUpdateRequestResource();
+		CustomerEntity customerEntity = CustomerObjectMother.generateCustomerEntity();
+		CustomerUpdateRequestResource customerRequestResource = CustomerObjectMother.generateCustomerUpdateRequestResource();
 		
 		//when
-		CustomerEntity ownerEntityResult = ownerMapper.map(CustomerObjectMother.generateCustomerEntity(), ownerRequestResource);
+		CustomerEntity customerEntityResult = customerMapper.map(CustomerObjectMother.generateCustomerEntity(), customerRequestResource);
 		
 		//then
-		assertEquals(ownerEntity.getId(), ownerEntityResult.getId());
-		assertEquals(ownerRequestResource.getFirstName(), ownerEntityResult.getFirstName());
-		assertEquals(ownerRequestResource.getLastName(), ownerEntityResult.getLastName());
-		assertEquals(ownerRequestResource.getAddress(), ownerEntityResult.getAddress());
-		assertEquals(ownerRequestResource.getCity(), ownerEntityResult.getCity());
-		assertEquals(ownerRequestResource.getTelephone(), ownerEntityResult.getTelephone());
+		assertEquals(customerEntity.getId(), customerEntityResult.getId());
+		assertEquals(customerRequestResource.getFirstName(), customerEntityResult.getFirstName());
+		assertEquals(customerRequestResource.getLastName(), customerEntityResult.getLastName());
+		assertEquals(customerRequestResource.getAddress(), customerEntityResult.getAddress());
+		assertEquals(customerRequestResource.getCity(), customerEntityResult.getCity());
+		assertEquals(customerRequestResource.getTelephone(), customerEntityResult.getTelephone());
 	}
 	
 }

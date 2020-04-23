@@ -11,17 +11,20 @@ public class VisitMapper {
 
 	public VisitEntity map(VisitRequestResource visitRequestResource) {
 		return VisitEntity.builder()
-				.date(visitRequestResource.getDate())
-				.description(visitRequestResource.getDescription())
+	    		.date(visitRequestResource.getDate())
+	    		.time(visitRequestResource.getTime())
+	    		.description(visitRequestResource.getDescription())
 				.build();
 	}
 	
 	public VisitResponseResource map(VisitEntity visitEntity) {
 		return VisitResponseResource.builder()
 				.id(visitEntity.getId())
-				.date(visitEntity.getDate())
-				.description(visitEntity.getDescription())
-				.petId(visitEntity.getPetId())
+				.customerIdentificationDocument(visitEntity.getCustomerIdentificationDocument())
+	    		.petId(visitEntity.getPetId())
+	    		.date(visitEntity.getDate())
+	    		.time(visitEntity.getTime())
+	    		.description(visitEntity.getDescription())
 				.build();
 	}
 	

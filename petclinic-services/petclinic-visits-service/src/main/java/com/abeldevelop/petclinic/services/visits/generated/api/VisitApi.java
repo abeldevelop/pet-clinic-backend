@@ -12,14 +12,14 @@ import com.abeldevelop.petclinic.services.visits.generated.resource.VisitPaginat
 import com.abeldevelop.petclinic.services.visits.generated.resource.VisitRequestResource;
 import com.abeldevelop.petclinic.services.visits.generated.resource.VisitResponseResource;
 
-@RequestMapping("/owners/{ownerId}/pets/{petId}/visits")
+@RequestMapping("/customers/{identificationDocument}/pets/{petId}/visits")
 public interface VisitApi {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public VisitResponseResource create(@PathVariable("ownerId") Integer ownerId, @PathVariable("petId") Integer petId, @RequestBody VisitRequestResource visitRequestResource);
+	public VisitResponseResource create(@PathVariable("identificationDocument") String identificationDocument, @PathVariable("petId") Integer petId, @RequestBody VisitRequestResource visitRequestResource);
 	
 	@GetMapping
-	public VisitPaginationResponseResource findAll(@PathVariable("ownerId") Integer ownerId, @PathVariable("petId") Integer petId);
+	public VisitPaginationResponseResource findAll(@PathVariable("identificationDocument") String identificationDocument, @PathVariable("petId") Integer petId);
 	
 }

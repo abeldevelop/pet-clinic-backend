@@ -1,6 +1,7 @@
 package com.abeldevelop.petclinic.services.visits.generated.resource;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,8 +19,11 @@ import lombok.ToString;
 public class VisitResponseResource {
 
     private Integer id;
-    private LocalDate date;
-    private String description;
+    private String customerIdentificationDocument;
     private Integer petId;
+    private Integer vetId;
+    private LocalDate date;
+    private LocalTime time;
+    private String description;
     
 }

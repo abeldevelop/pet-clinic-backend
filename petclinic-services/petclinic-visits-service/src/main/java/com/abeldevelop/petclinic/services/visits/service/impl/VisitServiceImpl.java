@@ -24,24 +24,25 @@ public class VisitServiceImpl implements VisitService {
 	
 	@Override
 	@Transactional
-	public VisitResponseResource create(Integer ownerId, Integer petId, VisitRequestResource visitRequestResource) {
-		validateExistOwnerAndPet(ownerId, petId);
+	public VisitResponseResource create(String identificationDocument, Integer petId, VisitRequestResource visitRequestResource) {
+		validateExistCustomerAndPet(identificationDocument, petId);
 		VisitEntity visitEntity = visitMapper.map(visitRequestResource);
+		visitEntity.setCustomerIdentificationDocument(identificationDocument);
 		visitEntity.setPetId(petId);
 		return visitMapper.map(visitRepository.save(visitEntity));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public VisitPaginationResponseResource findAll(Integer ownerId, Integer petId) {
-		validateExistOwnerAndPet(ownerId, petId);
+	public VisitPaginationResponseResource findAll(String identificationDocument, Integer petId) {
+		validateExistCustomerAndPet(identificationDocument, petId);
 		return VisitPaginationResponseResource.builder()
 				.visits(visitRepository.findByPetId(petId).stream().map(visitMapper::map).collect(Collectors.toList()))
 				.build();
 	}
 
-	private void validateExistOwnerAndPet(Integer ownerId, Integer petId) {
-		//TODO Call to petclinic-customers-service to validate exist ownerId and petId
+	private void validateExistCustomerAndPet(String identificationDocument, Integer petId) {
+		//TODO Call to petclinic-customers-service to validate exist identificationDocument and petId
 	}
 	
 }

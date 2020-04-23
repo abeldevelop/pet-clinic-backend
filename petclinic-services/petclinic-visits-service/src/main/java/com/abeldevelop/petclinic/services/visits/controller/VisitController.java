@@ -20,15 +20,15 @@ public class VisitController implements VisitApi {
 	private final VisitService visitService;
 	
 	@Override
-	public VisitResponseResource create(Integer ownerId, Integer petId, VisitRequestResource visitRequestResource) {
-		LoggerUtils.info(log, "VisitController.create Data IN => ownerId: {}, petId: {}, visitRequestResource: {}", ownerId, petId, visitRequestResource);
-		return visitService.create(ownerId, petId, visitRequestResource);
+	public VisitResponseResource create(String identificationDocument, Integer petId, VisitRequestResource visitRequestResource) {
+		LoggerUtils.info(log, "VisitController.create Data IN => identificationDocument: {}, petId: {}, visitRequestResource: {}", identificationDocument, petId, visitRequestResource);
+		return visitService.create(identificationDocument, petId, visitRequestResource);
 	}
 
 	@Override
-	public VisitPaginationResponseResource findAll(Integer ownerId, Integer petId) {
-		LoggerUtils.info(log, "VisitController.findAll Data IN => ownerId: {}, petId: {}", ownerId, petId);
-		return visitService.findAll(ownerId, petId);
+	public VisitPaginationResponseResource findAll(String identificationDocument, Integer petId) {
+		LoggerUtils.info(log, "VisitController.findAll Data IN => identificationDocument: {}, petId: {}", identificationDocument, petId);
+		return visitService.findAll(identificationDocument, petId);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.abeldevelop.petclinic.services.visits.generated.entity;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,14 +32,23 @@ public class VisitEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "visit_date")
+    @Column(name = "customer_identification_document", nullable = false)
+    private String customerIdentificationDocument;
+
+    @Column(name = "pet_id", nullable = false)
+    private Integer petId;
+    
+    @Column(name = "vet_id")
+    private Integer vetId;
+    
+    @Column(name = "visit_date", nullable = false)
     private LocalDate date;
 
+    @Column(name = "visit_time", nullable = false)
+    private LocalTime time;
+    
     @Size(max = 8192)
     @Column(name = "description")
     private String description;
 
-    @Column(name = "pet_id")
-    private Integer petId;
-    
 }

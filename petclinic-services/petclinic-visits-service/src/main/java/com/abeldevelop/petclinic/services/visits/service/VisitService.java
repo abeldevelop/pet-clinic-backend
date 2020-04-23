@@ -6,8 +6,8 @@ import com.abeldevelop.petclinic.services.visits.generated.resource.VisitRespons
 
 public interface VisitService {
 
-	public VisitResponseResource create(Integer ownerId, Integer petId, VisitRequestResource visitRequestResource);
+	public VisitResponseResource create(String identificationDocument, Integer petId, VisitRequestResource visitRequestResource);
 	
-	public VisitPaginationResponseResource findAll(Integer ownerId, Integer petId);
+	public VisitPaginationResponseResource findAll(String identificationDocument, Integer petId);
 	
 }

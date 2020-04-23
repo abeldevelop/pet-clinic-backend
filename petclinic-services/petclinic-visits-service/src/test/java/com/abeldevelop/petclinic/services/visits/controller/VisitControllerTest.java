@@ -33,13 +33,13 @@ public class VisitControllerTest extends CommonTest {
 		//given
 		visitRepository.deleteAll();
 		VisitRequestResource visitRequestResource = VisitObjectMother.generateVisitRequestResource();
-		Integer ownerId = 1;
+		String identificationDocument = "1";
 		Integer petId = 1;
 		
 		//when
 		ResponseCall<VisitResponseResource> response = makePostCall(RequestCall.builder()
-				.endpoint("/owners/{ownerId}/pets/{petId}/visits")
-				.pathParam(ownerId).pathParam(petId)
+				.endpoint("/customers/{identificationDocument}/pets/{petId}/visits")
+				.pathParam(identificationDocument).pathParam(petId)
 				.body(visitRequestResource)
 				.build(), 
 				VisitResponseResource.class);
@@ -58,13 +58,13 @@ public class VisitControllerTest extends CommonTest {
 		//given
 		visitRepository.deleteAll();
 		visitRepository.save(VisitObjectMother.generateVisitEntity());
-		Integer ownerId = 1;
+		String identificationDocument = "1";
 		Integer petId = 1;
 		
 		//when
 		ResponseCall<VisitPaginationResponseResource> response = makeGetCall(RequestCall.builder()
-				.endpoint("/owners/{ownerId}/pets/{petId}/visits")
-				.pathParam(ownerId).pathParam(petId)
+				.endpoint("/customers/{identificationDocument}/pets/{petId}/visits")
+				.pathParam(identificationDocument).pathParam(petId)
 				.build(), 
 				VisitPaginationResponseResource.class);
 		

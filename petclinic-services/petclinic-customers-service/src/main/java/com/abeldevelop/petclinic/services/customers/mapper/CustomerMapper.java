@@ -24,24 +24,24 @@ public class CustomerMapper {
 				.build();
 	}
 	
-	public CustomerResponseResource map(CustomerEntity ownerEntity) {
+	public CustomerResponseResource map(CustomerEntity customerEntity) {
 		return CustomerResponseResource.builder()
-			    .id(ownerEntity.getId())
-			    .identificationDocument(ownerEntity.getIdentificationDocument())
-			    .firstName(ownerEntity.getFirstName())
-			    .lastName(ownerEntity.getLastName())
-			    .address(ownerEntity.getAddress())
-			    .city(ownerEntity.getCity())
-			    .telephone(ownerEntity.getTelephone())
+			    .id(customerEntity.getId())
+			    .identificationDocument(customerEntity.getIdentificationDocument())
+			    .firstName(customerEntity.getFirstName())
+			    .lastName(customerEntity.getLastName())
+			    .address(customerEntity.getAddress())
+			    .city(customerEntity.getCity())
+			    .telephone(customerEntity.getTelephone())
 				.build();
 	}
 	
-	public CustomerEntity map(CustomerEntity ownerEntity, CustomerUpdateRequestResource customerUpdateRequestResource) {
-		ownerEntity.setFirstName(customerUpdateRequestResource.getFirstName());
-		ownerEntity.setLastName(customerUpdateRequestResource.getLastName());
-		ownerEntity.setAddress(customerUpdateRequestResource.getAddress());
-		ownerEntity.setCity(customerUpdateRequestResource.getCity());
-		ownerEntity.setTelephone(customerUpdateRequestResource.getTelephone());
-		return ownerEntity;
+	public CustomerEntity map(CustomerEntity customerEntity, CustomerUpdateRequestResource customerUpdateRequestResource) {
+		customerEntity.setFirstName(customerUpdateRequestResource.getFirstName());
+		customerEntity.setLastName(customerUpdateRequestResource.getLastName());
+		customerEntity.setAddress(customerUpdateRequestResource.getAddress());
+		customerEntity.setCity(customerUpdateRequestResource.getCity());
+		customerEntity.setTelephone(customerUpdateRequestResource.getTelephone());
+		return customerEntity;
 	}
 }
