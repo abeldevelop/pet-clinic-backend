@@ -12,7 +12,7 @@ public class CustomerObjectMother {
 	
 	public static CustomerCreateRequestResource generateCustomerCreateRequestResource() {
 		return CustomerCreateRequestResource.builder()
-				.identificationDocument("identificationDocument")
+				.identificationDocument("123456")
 			    .firstName("firstName")
 			    .lastName("lastName")
 			    .address("address")
@@ -34,7 +34,7 @@ public class CustomerObjectMother {
 	public static CustomerEntity generateCustomerEntity() {
 		return CustomerEntity.builder()
 				.id(1)
-				.identificationDocument("identificationDocumentEntity")
+				.identificationDocument("54321")
 			    .firstName("firstNameEntity")
 			    .lastName("lastNameEntity")
 			    .address("addressEntity")

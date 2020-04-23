@@ -4,6 +4,6 @@ CREATE TABLE IF NOT EXISTS visits (
   pet_id INT NOT NULL,
   vet_id INT,
   visit_date DATE NOT NULL,
-  visit_hour TIME NOT NULL,
+  visit_time TIME NOT NULL,
   description VARCHAR(8192)
-) engine=InnoDB;
+);
