@@ -1,8 +1,10 @@
 package com.abeldevelop.petclinic.services.customers.repository.impl;
 
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
 import com.abeldevelop.petclinic.services.customers.generated.entity.CustomerEntity;
@@ -33,7 +35,12 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 	}
 	
 	@Override
-	public List<CustomerEntity> executeFindAll() {
-		return customerSpringDataRepository.findAll();
+	public Page<CustomerEntity> executeFindAll(Pageable page) {
+		return customerSpringDataRepository.findAll(page);
+	}
+	
+	@Override
+	public Page<CustomerEntity> executeFindAll(Specification<CustomerEntity> spec, Pageable pageable) {
+		return customerSpringDataRepository.findAll(spec, pageable);
 	}
 }

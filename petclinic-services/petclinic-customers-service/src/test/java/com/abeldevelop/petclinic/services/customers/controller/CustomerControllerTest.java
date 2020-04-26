@@ -3,6 +3,7 @@ package com.abeldevelop.petclinic.services.customers.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.abeldevelop.petclinic.library.common.component.MessageFormatter;
 import com.abeldevelop.petclinic.library.common.resources.ErrorResponseResource;
 import com.abeldevelop.petclinic.library.test.CommonTest;
 import com.abeldevelop.petclinic.library.test.domain.RequestCall;
@@ -24,6 +26,7 @@ import com.abeldevelop.petclinic.services.customers.generated.resource.customer.
 import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerUpdateRequestResource;
 import com.abeldevelop.petclinic.services.customers.objectmother.CustomerObjectMother;
 import com.abeldevelop.petclinic.services.customers.repository.springdata.CustomerSpringDataRepository;
+import com.abeldevelop.petclinic.services.customers.util.constants.CustomerConstants;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -32,6 +35,9 @@ public class CustomerControllerTest extends CommonTest {
 
 	@Autowired
 	private CustomerSpringDataRepository customerSpringDataRepository;
+	
+	@Autowired
+	private MessageFormatter messageFormatter;
 	
 	@Test
 	public void testCreateCustomerEndpoint() throws Exception {
@@ -49,6 +55,7 @@ public class CustomerControllerTest extends CommonTest {
 		//then
 		assertEquals(HttpStatus.CREATED, response.getStatus());
 		assertNotNull(response.getBody().getId());
+		assertEquals(customerCreateRequestResource.getIdentificationDocument(), response.getBody().getIdentificationDocument());
 		assertEquals(customerCreateRequestResource.getFirstName(), response.getBody().getFirstName());
 		assertEquals(customerCreateRequestResource.getLastName(), response.getBody().getLastName());
 		assertEquals(customerCreateRequestResource.getAddress(), response.getBody().getAddress());
@@ -138,8 +145,10 @@ public class CustomerControllerTest extends CommonTest {
 				ErrorResponseResource.class);
 		
 		//then
+		String expectedErrorMessage = messageFormatter.format(CustomerConstants.CUSTOMER_WITH_IDENTIFICATION_DOCUMENT_NOT_FOUND_ERROR_MESSAGE, Arrays.asList(identificationDocument));
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatus());
-		assertEquals("No exist Customer with Identification Document: '" + identificationDocument + "'", response.getBody().getMessage());
+		assertEquals(CustomerConstants.CUSTOMER_WITH_IDENTIFICATION_DOCUMENT_NOT_FOUND_ERROR_CODE, response.getBody().getCode());
+		assertEquals(expectedErrorMessage, response.getBody().getMessage());
 	}
 	
 	@Test
@@ -159,5 +168,24 @@ public class CustomerControllerTest extends CommonTest {
 		assertEquals(1, response.getBody().getCustomers().size());
 	}
 	
+	@Test
+	public void testFindAllCustomersEndpointWithPagination() throws Exception {
+		//given
+		customerSpringDataRepository.deleteAll();
+		customerSpringDataRepository.save(CustomerObjectMother.generateCustomerEntity());
+		
+		//when
+		ResponseCall<CustomerPaginationResponseResource> response = makeGetCall(RequestCall.builder()
+				.endpoint("/customers")
+				.requestParam("page", "1")
+				.requestParam("size", "5")
+				.requestParam("first-name", "a")
+				.build(), 
+				CustomerPaginationResponseResource.class);
+		
+		//then
+		assertEquals(HttpStatus.OK, response.getStatus());
+		assertEquals(1, response.getBody().getCustomers().size());
+	}
 	
 }

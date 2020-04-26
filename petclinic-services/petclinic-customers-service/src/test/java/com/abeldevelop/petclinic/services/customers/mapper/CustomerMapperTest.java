@@ -23,17 +23,18 @@ public class CustomerMapperTest {
 	@Test
 	public void mapCustomerRequestResourceToCustomerEntity() {
 		//given
-		CustomerCreateRequestResource customerRequestResource = CustomerObjectMother.generateCustomerCreateRequestResource();
+		CustomerCreateRequestResource customerCreateRequestResource = CustomerObjectMother.generateCustomerCreateRequestResource();
 		
 		//when
-		CustomerEntity customerEntity = customerMapper.map(customerRequestResource);
+		CustomerEntity customerEntity = customerMapper.map(customerCreateRequestResource);
 		
 		//then
-		assertEquals(customerRequestResource.getFirstName(), customerEntity.getFirstName());
-		assertEquals(customerRequestResource.getLastName(), customerEntity.getLastName());
-		assertEquals(customerRequestResource.getAddress(), customerEntity.getAddress());
-		assertEquals(customerRequestResource.getCity(), customerEntity.getCity());
-		assertEquals(customerRequestResource.getTelephone(), customerEntity.getTelephone());
+		assertEquals(customerCreateRequestResource.getIdentificationDocument(), customerEntity.getIdentificationDocument());
+		assertEquals(customerCreateRequestResource.getFirstName(), customerEntity.getFirstName());
+		assertEquals(customerCreateRequestResource.getLastName(), customerEntity.getLastName());
+		assertEquals(customerCreateRequestResource.getAddress(), customerEntity.getAddress());
+		assertEquals(customerCreateRequestResource.getCity(), customerEntity.getCity());
+		assertEquals(customerCreateRequestResource.getTelephone(), customerEntity.getTelephone());
 	}
 	
 	@Test
@@ -46,6 +47,7 @@ public class CustomerMapperTest {
 		
 		//then
 		assertEquals(customerEntity.getId(), customerResponseResource.getId());
+		assertEquals(customerEntity.getIdentificationDocument(), customerResponseResource.getIdentificationDocument());
 		assertEquals(customerEntity.getFirstName(), customerResponseResource.getFirstName());
 		assertEquals(customerEntity.getLastName(), customerResponseResource.getLastName());
 		assertEquals(customerEntity.getAddress(), customerResponseResource.getAddress());
@@ -57,18 +59,18 @@ public class CustomerMapperTest {
 	public void mapCustomerEntityAndCustomerRequestResourceToCustomerEntity() {
 		//given
 		CustomerEntity customerEntity = CustomerObjectMother.generateCustomerEntity();
-		CustomerUpdateRequestResource customerRequestResource = CustomerObjectMother.generateCustomerUpdateRequestResource();
+		CustomerUpdateRequestResource customerUpdateRequestResource = CustomerObjectMother.generateCustomerUpdateRequestResource();
 		
 		//when
-		CustomerEntity customerEntityResult = customerMapper.map(CustomerObjectMother.generateCustomerEntity(), customerRequestResource);
+		CustomerEntity customerEntityResult = customerMapper.map(CustomerObjectMother.generateCustomerEntity(), customerUpdateRequestResource);
 		
 		//then
 		assertEquals(customerEntity.getId(), customerEntityResult.getId());
-		assertEquals(customerRequestResource.getFirstName(), customerEntityResult.getFirstName());
-		assertEquals(customerRequestResource.getLastName(), customerEntityResult.getLastName());
-		assertEquals(customerRequestResource.getAddress(), customerEntityResult.getAddress());
-		assertEquals(customerRequestResource.getCity(), customerEntityResult.getCity());
-		assertEquals(customerRequestResource.getTelephone(), customerEntityResult.getTelephone());
+		assertEquals(customerUpdateRequestResource.getFirstName(), customerEntityResult.getFirstName());
+		assertEquals(customerUpdateRequestResource.getLastName(), customerEntityResult.getLastName());
+		assertEquals(customerUpdateRequestResource.getAddress(), customerEntityResult.getAddress());
+		assertEquals(customerUpdateRequestResource.getCity(), customerEntityResult.getCity());
+		assertEquals(customerUpdateRequestResource.getTelephone(), customerEntityResult.getTelephone());
 	}
 	
 }

@@ -14,8 +14,8 @@ public class PaginationValidator {
 	}
 	
 	private void validatePage(Integer page) {
-		if(page != null && page < 0) {
-			throw new BadRequestException(0, PaginationConstants.PAGE_NUMBER_ERROR_MESSAGE);
+		if(page != null && page < 1) {
+			throw new BadRequestException(1, PaginationConstants.PAGE_NUMBER_ERROR_MESSAGE);
 		}
 	}
 	

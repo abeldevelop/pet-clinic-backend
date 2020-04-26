@@ -1,9 +1,9 @@
 package com.abeldevelop.petclinic.library.test;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.util.CollectionUtils;
 
 import com.abeldevelop.petclinic.library.test.domain.RequestCall;
 import com.abeldevelop.petclinic.library.test.domain.ResponseCall;
@@ -25,7 +26,6 @@ public class CommonTest {
 	@Autowired
 	protected MockMvc mvc;
 
-	
 	protected <T> T convertJsonAsStringToObject(String jsonAsString, Class<T> valueType) throws Exception {
 		return objectMapper.readValue(jsonAsString, valueType);
 	}
@@ -44,7 +44,11 @@ public class CommonTest {
 	}
 	
 	public <T> ResponseCall<T> makeGetCall(RequestCall makeCall, Class<T> responseClass) throws Exception {
-		return makeCall(get(makeCall.getEndpoint(), makeCall.getPathParams().toArray()), responseClass);
+		MockHttpServletRequestBuilder mockHttpServletRequestBuilder = get(makeCall.getEndpoint(), makeCall.getPathParams().toArray());
+		if(!CollectionUtils.isEmpty(makeCall.getRequestParams())) {
+			makeCall.getRequestParams().forEach((key, value) -> mockHttpServletRequestBuilder.param(key, value));
+		}
+		return makeCall(mockHttpServletRequestBuilder, responseClass);
 	}
 	
 	public <T> ResponseCall<T> makePutCall(RequestCall makeCall, Class<T> responseClass) throws Exception {

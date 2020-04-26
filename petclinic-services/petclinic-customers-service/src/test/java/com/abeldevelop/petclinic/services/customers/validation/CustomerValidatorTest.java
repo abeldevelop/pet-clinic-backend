@@ -32,9 +32,58 @@ public class CustomerValidatorTest {
 	}
 	
 	@Test
+	public void testValidateCustomerCreateRequestResourceIdentificationDocumentLength() {
+		CustomerCreateRequestResource customerCreateRequestResource = CustomerObjectMother.generateCustomerCreateRequestResource();
+		customerCreateRequestResource.setIdentificationDocument("01234567890123456789");
+		assertThrows(BadRequestException.class, () -> customerValidator.validate(customerCreateRequestResource));
+	}
+	
+	@Test
 	public void testValidateCustomerCreateRequestResourceFirstNameNullOrEmpty() {
 		CustomerCreateRequestResource customerCreateRequestResource = CustomerObjectMother.generateCustomerCreateRequestResource();
 		customerCreateRequestResource.setFirstName(null);
+		assertThrows(BadRequestException.class, () -> customerValidator.validate(customerCreateRequestResource));
+	}
+	
+	@Test
+	public void testValidateCustomerCreateRequestResourceFirstNameLength() {
+		CustomerCreateRequestResource customerCreateRequestResource = CustomerObjectMother.generateCustomerCreateRequestResource();
+		customerCreateRequestResource.setFirstName("0123456789012345678901234567890");
+		assertThrows(BadRequestException.class, () -> customerValidator.validate(customerCreateRequestResource));
+	}
+	
+	@Test
+	public void testValidateCustomerCreateRequestResourceLastNameLength() {
+		CustomerCreateRequestResource customerCreateRequestResource = CustomerObjectMother.generateCustomerCreateRequestResource();
+		customerCreateRequestResource.setLastName("0123456789012345678901234567890");
+		assertThrows(BadRequestException.class, () -> customerValidator.validate(customerCreateRequestResource));
+	}
+	
+	@Test
+	public void testValidateCustomerCreateRequestResourceAddressLength() {
+		CustomerCreateRequestResource customerCreateRequestResource = CustomerObjectMother.generateCustomerCreateRequestResource();
+		customerCreateRequestResource.setAddress(
+				"0123456789001234567890012345678900123456789001234567890" +
+				"0123456789001234567890012345678900123456789001234567890" + 
+				"0123456789001234567890012345678900123456789001234567890" +
+				"0123456789001234567890012345678900123456789001234567890" +
+				"0123456789001234567890012345678900123456789001234567890" +
+				"0"
+				);
+		assertThrows(BadRequestException.class, () -> customerValidator.validate(customerCreateRequestResource));
+	}
+	
+	@Test
+	public void testValidateCustomerCreateRequestResourceCityLength() {
+		CustomerCreateRequestResource customerCreateRequestResource = CustomerObjectMother.generateCustomerCreateRequestResource();
+		customerCreateRequestResource.setCity("012345678901234567890123456789012345678901234567890123456789");
+		assertThrows(BadRequestException.class, () -> customerValidator.validate(customerCreateRequestResource));
+	}
+	
+	@Test
+	public void testValidateCustomerCreateRequestResourceTelephoneLength() {
+		CustomerCreateRequestResource customerCreateRequestResource = CustomerObjectMother.generateCustomerCreateRequestResource();
+		customerCreateRequestResource.setTelephone("012345678901234567890");
 		assertThrows(BadRequestException.class, () -> customerValidator.validate(customerCreateRequestResource));
 	}
 	

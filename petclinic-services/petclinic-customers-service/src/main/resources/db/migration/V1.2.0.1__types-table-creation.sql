@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS types (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(80) NOT NULL,
+  name VARCHAR(25) NOT NULL,
   UNIQUE (name),
   INDEX(name)
 );
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS customers (
   first_name VARCHAR(30) NOT NULL,
   last_name VARCHAR(30),
   address VARCHAR(255),
-  city VARCHAR(80),
+  city VARCHAR(50),
   telephone VARCHAR(20),
   UNIQUE (identification_document),
   INDEX(first_name),

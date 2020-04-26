@@ -1,9 +1,8 @@
 package com.abeldevelop.petclinic.services.customers.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.abeldevelop.petclinic.library.common.extend.CommonController;
 import com.abeldevelop.petclinic.library.common.util.LoggerUtils;
 import com.abeldevelop.petclinic.services.customers.generated.api.CustomerApi;
 import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerCreateRequestResource;
@@ -21,13 +20,12 @@ import lombok.extern.slf4j.Slf4j;
 @Timed("petclinic.customer")
 @RequiredArgsConstructor
 @RestController
-public class CustomerController implements CustomerApi {
+public class CustomerController extends CommonController implements CustomerApi {
 
 	private final CustomerService customerService;
 	private final CustomerValidator customerValidator;
 
 	@Override
-	@ResponseStatus(HttpStatus.CREATED)
 	public CustomerResponseResource executeCreateCustomer(CustomerCreateRequestResource customerCreateRequestResource) {
 		LoggerUtils.info(log, "CustomerController.executeCreateCustomer Data IN => customerCreateRequestResource: {}", customerCreateRequestResource);
 		customerValidator.validate(customerCreateRequestResource);
@@ -35,7 +33,6 @@ public class CustomerController implements CustomerApi {
     }
 	
 	@Override
-	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void executeUpdateCustomer(String identificationDocument, CustomerUpdateRequestResource customerUpdateRequestResource) {
 		LoggerUtils.info(log, "CustomerController.executeUpdateCustomer Data IN => identificationDocument: {}, customerUpdateRequestResource: {}", identificationDocument, customerUpdateRequestResource);
 		customerValidator.validate(customerUpdateRequestResource);
@@ -43,8 +40,7 @@ public class CustomerController implements CustomerApi {
 	}
 	
 	@Override
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void executeDeleteCustomer(String identificationDocument) {
+	public void executeDeleteCustomerByIdentificationDocument(String identificationDocument) {
 		LoggerUtils.info(log, "CustomerController.executeDeleteCustomer Data IN => identificationDocument: {}", identificationDocument);
 		customerService.executeDelete(identificationDocument);
 	}
@@ -56,8 +52,9 @@ public class CustomerController implements CustomerApi {
     }
 
 	@Override
-	public CustomerPaginationResponseResource findAllCustomers() {
+	public CustomerPaginationResponseResource findAllCustomers(Integer page, Integer size, String firstName) {
 		LoggerUtils.info(log, "CustomerController.findAllCustomers Data IN => ");
-        return customerService.executeFindAll();
+		paginationValidator.validate(page, size);
+		return customerService.executeFindAll(page, size, firstName);
     }
 }

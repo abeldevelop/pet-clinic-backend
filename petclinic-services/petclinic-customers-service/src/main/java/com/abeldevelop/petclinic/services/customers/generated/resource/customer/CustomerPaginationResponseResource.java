@@ -2,6 +2,8 @@ package com.abeldevelop.petclinic.services.customers.generated.resource.customer
 
 import java.util.List;
 
+import com.abeldevelop.petclinic.library.common.resources.PaginationResponseResource;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,6 +19,7 @@ import lombok.ToString;
 @ToString
 public class CustomerPaginationResponseResource {
 
+	private PaginationResponseResource pagination;
     private List<CustomerResponseResource> customers;
     
 }

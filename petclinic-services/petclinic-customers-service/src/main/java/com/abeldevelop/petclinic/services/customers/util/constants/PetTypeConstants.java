@@ -9,7 +9,7 @@ public class PetTypeConstants {
 	public static final int NAME_VALIDATION_NOT_NULL_ERROR_CODE = 0;
 	public static final String NAME_VALIDATION_NOT_NULL_ERROR_MESSAGE = "The name is mandatory";
 	
-	public static final int NAME_VALIDATION_MAX_LENGTH = 80;
+	public static final int NAME_VALIDATION_MAX_LENGTH = 25;
 	public static final String NAME_VALIDATION_MAX_LENGTH_ERROR_MESSAGE = "The name cannot have more than {} characters";
 	public static final int NAME_VALIDATION_MAX_LENGTH_ERROR_CODE = 0;
 	

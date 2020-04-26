@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerCreateRequestResource;
@@ -28,12 +29,17 @@ public interface CustomerApi {
 	
 	@DeleteMapping("/{identificationDocument}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-	public void executeDeleteCustomer(@PathVariable("identificationDocument") String identificationDocument);
+	public void executeDeleteCustomerByIdentificationDocument(@PathVariable("identificationDocument") String identificationDocument);
 	
 	@GetMapping(value = "/{identificationDocument}")
+	@ResponseStatus(HttpStatus.OK)
     public CustomerResponseResource executeFindCustomerByIdentificationDocument(@PathVariable("identificationDocument") String identificationDocument);
 	
 	@GetMapping
-    public CustomerPaginationResponseResource findAllCustomers();
+	@ResponseStatus(HttpStatus.OK)
+    public CustomerPaginationResponseResource findAllCustomers(
+    		@RequestParam(name = "page", required = false) Integer page, 
+    		@RequestParam(name = "size", required = false) Integer size,
+    		@RequestParam(name = "first-name", required = false) String firstName);
 	
 }

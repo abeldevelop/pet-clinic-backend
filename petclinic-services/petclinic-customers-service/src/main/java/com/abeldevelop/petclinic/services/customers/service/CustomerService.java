@@ -15,6 +15,6 @@ public interface CustomerService {
 	
     public CustomerResponseResource executeFindByIdentificationDocument(String identificationDocument);
     
-    public CustomerPaginationResponseResource executeFindAll();
+    public CustomerPaginationResponseResource executeFindAll(Integer page, Integer size, String firstName);
 	
 }

@@ -13,10 +13,10 @@ public class CustomerObjectMother {
 	public static CustomerCreateRequestResource generateCustomerCreateRequestResource() {
 		return CustomerCreateRequestResource.builder()
 				.identificationDocument("123456")
-			    .firstName("firstName")
-			    .lastName("lastName")
-			    .address("address")
-			    .city("city")
+			    .firstName("firstNameCreate")
+			    .lastName("lastNameCreate")
+			    .address("addressCreate")
+			    .city("cityCreate")
 			    .telephone("987654321")
 				.build();
 	}
