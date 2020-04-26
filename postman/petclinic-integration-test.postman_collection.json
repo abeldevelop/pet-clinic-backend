@@ -276,7 +276,7 @@
 											"",
 											"",
 											"//WorkFlow",
-											"postman.setNextRequest(\"CreateCustomer-OK\");"
+											"postman.setNextRequest(null);"
 										],
 										"type": "text/javascript"
 									}
@@ -332,7 +332,7 @@
 											"});",
 											"",
 											"//WorkFlow",
-											"postman.setNextRequest(\"DeletePetTypeById-OK\");"
+											"postman.setNextRequest(\"CreateCustomer-OK\");"
 										],
 										"type": "text/javascript"
 									}
@@ -624,7 +624,7 @@
 											"",
 											"",
 											"//WorkFlow",
-											"postman.setNextRequest(null);"
+											"postman.setNextRequest(\"DeletePetTypeById-OK\");"
 										],
 										"type": "text/javascript"
 									}
