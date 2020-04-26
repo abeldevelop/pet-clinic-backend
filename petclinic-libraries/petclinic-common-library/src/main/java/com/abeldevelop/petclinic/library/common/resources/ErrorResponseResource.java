@@ -19,7 +19,7 @@ public class ErrorResponseResource {
 
 	private LocalDateTime timestamp;
 	private String id;
-	private String code;
+	private Integer code;
 	private String message;
 	
 }

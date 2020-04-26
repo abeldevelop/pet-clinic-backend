@@ -3,7 +3,7 @@ package com.abeldevelop.petclinic.services.customers.objectmother;
 import java.time.LocalDate;
 
 import com.abeldevelop.petclinic.services.customers.generated.entity.PetEntity;
-import com.abeldevelop.petclinic.services.customers.generated.resource.PetRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetRequestResource;
 
 public class PetObjectMother {
 

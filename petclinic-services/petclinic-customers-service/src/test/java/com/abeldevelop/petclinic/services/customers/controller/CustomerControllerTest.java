@@ -18,10 +18,10 @@ import com.abeldevelop.petclinic.library.test.CommonTest;
 import com.abeldevelop.petclinic.library.test.domain.RequestCall;
 import com.abeldevelop.petclinic.library.test.domain.ResponseCall;
 import com.abeldevelop.petclinic.services.customers.generated.entity.CustomerEntity;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerCreateRequestResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerPaginationResponseResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerResponseResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerUpdateRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerCreateRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerPaginationResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerUpdateRequestResource;
 import com.abeldevelop.petclinic.services.customers.objectmother.CustomerObjectMother;
 import com.abeldevelop.petclinic.services.customers.repository.springdata.CustomerSpringDataRepository;
 

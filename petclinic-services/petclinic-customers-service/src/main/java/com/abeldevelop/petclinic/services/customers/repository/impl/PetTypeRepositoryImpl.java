@@ -1,8 +1,9 @@
 package com.abeldevelop.petclinic.services.customers.repository.impl;
 
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.abeldevelop.petclinic.services.customers.generated.entity.PetTypeEntity;
@@ -18,12 +19,27 @@ public class PetTypeRepositoryImpl implements PetTypeRepository {
 	private final PetTypeSpringDataRepository petTypeSpringDataRepository;
 
 	@Override
-	public List<PetTypeEntity> executeFindAll() {
-		return petTypeSpringDataRepository.findAll();
+	public PetTypeEntity executeSave(PetTypeEntity petTypeEntity) {
+		return petTypeSpringDataRepository.save(petTypeEntity);
+	}
+	
+	@Override
+	public void executeDelete(PetTypeEntity petTypeEntity) {
+		petTypeSpringDataRepository.delete(petTypeEntity);
+	}
+	
+	@Override
+	public Page<PetTypeEntity> executeFindAll(Pageable page) {
+		return petTypeSpringDataRepository.findAll(page);
 	}
 	
 	@Override
 	public Optional<PetTypeEntity> executeFindById(Integer petTypeId) {
 		return petTypeSpringDataRepository.findById(petTypeId);
+	}
+	
+	@Override
+	public Optional<PetTypeEntity> executeFindByName(String name) {
+		return petTypeSpringDataRepository.findByName(name);
 	}
 }

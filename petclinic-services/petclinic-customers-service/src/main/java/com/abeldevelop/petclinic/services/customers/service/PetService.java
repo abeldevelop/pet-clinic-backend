@@ -1,8 +1,8 @@
 package com.abeldevelop.petclinic.services.customers.service;
 
-import com.abeldevelop.petclinic.services.customers.generated.resource.PetPaginationResponseResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.PetRequestResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.PetResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetPaginationResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetResponseResource;
 
 public interface PetService {
 

@@ -1,4 +1,4 @@
-package com.abeldevelop.petclinic.services.customers.generated.resource;
+package com.abeldevelop.petclinic.services.customers.generated.resource.pet;
 
 import java.time.LocalDate;
 
@@ -15,12 +15,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class PetResponseResource {
+public class PetRequestResource {
 
-    private Integer id;
     private String name;
-    private LocalDate birthDate;
-    private Integer petTypeId;
-    private Integer customerId;
+	private LocalDate birthDate;
+    private Integer typeId;
     
 }

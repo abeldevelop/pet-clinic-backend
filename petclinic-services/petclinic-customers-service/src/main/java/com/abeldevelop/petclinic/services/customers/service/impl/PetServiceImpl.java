@@ -7,9 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.abeldevelop.petclinic.library.common.exception.NotFoundException;
 import com.abeldevelop.petclinic.services.customers.generated.entity.PetEntity;
-import com.abeldevelop.petclinic.services.customers.generated.resource.PetPaginationResponseResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.PetRequestResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.PetResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetPaginationResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetResponseResource;
 import com.abeldevelop.petclinic.services.customers.mapper.PetMapper;
 import com.abeldevelop.petclinic.services.customers.repository.impl.PetRepositoryImpl;
 import com.abeldevelop.petclinic.services.customers.service.CustomerDomainService;
@@ -55,13 +55,13 @@ public class PetServiceImpl implements PetService, PetDomainService {
 	@Override
 	@Transactional(readOnly = true)
 	public PetResponseResource executeFindById(String identificationDocument, Integer petId) {
-		return petMapper.map(petRepository.executeFindByIdAndCustomer(petId, customerDomainService.findByIdentificationDocument(identificationDocument)).orElseThrow(() -> new NotFoundException("No exist Pet with ID: '" + petId + "' for Customer with Identification Document: '" + identificationDocument + "'")));
+		return petMapper.map(petRepository.executeFindByIdAndCustomer(petId, customerDomainService.findByIdentificationDocument(identificationDocument)).orElseThrow(() -> new NotFoundException(0, "No exist Pet with ID: '" + petId + "' for Customer with Identification Document: '" + identificationDocument + "'")));
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
 	public PetEntity findPetById(Integer petId) {
-		return petRepository.executeFindById(petId).orElseThrow(() -> new NotFoundException("No exist Pet with ID: '" + petId + "'"));
+		return petRepository.executeFindById(petId).orElseThrow(() -> new NotFoundException(0, "No exist Pet with ID: '" + petId + "'"));
 	}
 
 	@Override

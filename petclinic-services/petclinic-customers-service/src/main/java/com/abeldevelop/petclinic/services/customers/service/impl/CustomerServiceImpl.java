@@ -7,10 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.abeldevelop.petclinic.library.common.exception.NotFoundException;
 import com.abeldevelop.petclinic.services.customers.generated.entity.CustomerEntity;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerCreateRequestResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerPaginationResponseResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerResponseResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerUpdateRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerCreateRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerPaginationResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerUpdateRequestResource;
 import com.abeldevelop.petclinic.services.customers.mapper.CustomerMapper;
 import com.abeldevelop.petclinic.services.customers.repository.CustomerRepository;
 import com.abeldevelop.petclinic.services.customers.service.CustomerDomainService;
@@ -54,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService, CustomerDomainServi
 	@Override
 	@Transactional(readOnly = true)
 	public CustomerEntity findByIdentificationDocument(String identificationDocument) {
-		return customerRepository.executeFindByIdentificationDocument(identificationDocument).orElseThrow(() -> new NotFoundException("No exist Customer with Identification Document: '" + identificationDocument + "'"));
+		return customerRepository.executeFindByIdentificationDocument(identificationDocument).orElseThrow(() -> new NotFoundException(0, "No exist Customer with Identification Document: '" + identificationDocument + "'"));
 	}
 	
 	@Override

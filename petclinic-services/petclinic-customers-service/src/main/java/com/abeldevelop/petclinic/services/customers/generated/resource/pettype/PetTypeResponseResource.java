@@ -1,6 +1,4 @@
-package com.abeldevelop.petclinic.services.customers.generated.resource;
-
-import java.util.List;
+package com.abeldevelop.petclinic.services.customers.generated.resource.pettype;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,8 +13,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class PetTypePaginationResponseResource {
+public class PetTypeResponseResource {
 
-	private List<PetTypeResponseResource> petTypes;
+    private Integer id;
+    private String name;
     
 }

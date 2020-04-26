@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.abeldevelop.petclinic.library.common.util.LoggerUtils;
 import com.abeldevelop.petclinic.services.customers.generated.api.CustomerApi;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerCreateRequestResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerPaginationResponseResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerResponseResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerUpdateRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerCreateRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerPaginationResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerUpdateRequestResource;
 import com.abeldevelop.petclinic.services.customers.service.CustomerService;
 import com.abeldevelop.petclinic.services.customers.validation.CustomerValidator;
 

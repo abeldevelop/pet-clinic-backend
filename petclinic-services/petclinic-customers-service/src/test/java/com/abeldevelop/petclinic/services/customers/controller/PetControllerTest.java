@@ -18,9 +18,9 @@ import com.abeldevelop.petclinic.library.test.domain.ResponseCall;
 import com.abeldevelop.petclinic.services.customers.generated.entity.CustomerEntity;
 import com.abeldevelop.petclinic.services.customers.generated.entity.PetEntity;
 import com.abeldevelop.petclinic.services.customers.generated.entity.PetTypeEntity;
-import com.abeldevelop.petclinic.services.customers.generated.resource.PetPaginationResponseResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.PetRequestResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.PetResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetPaginationResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetResponseResource;
 import com.abeldevelop.petclinic.services.customers.objectmother.CustomerObjectMother;
 import com.abeldevelop.petclinic.services.customers.objectmother.PetObjectMother;
 import com.abeldevelop.petclinic.services.customers.objectmother.PetTypeObjectMother;
@@ -89,7 +89,7 @@ public class PetControllerTest extends CommonTest {
 		
 		//then
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatus());
-		assertEquals("No exist Pet Type with ID: '" + petTypeEntity.getId() + "'", response.getBody().getMessage());
+		assertEquals("Not found Pet Type with ID: '" + petTypeEntity.getId() + "'", response.getBody().getMessage());
 	}
 	
 	@Test

@@ -6,8 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.abeldevelop.petclinic.services.customers.generated.entity.PetEntity;
-import com.abeldevelop.petclinic.services.customers.generated.resource.PetRequestResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.PetResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetResponseResource;
 import com.abeldevelop.petclinic.services.customers.objectmother.PetObjectMother;
 
 public class PetMapperTest {

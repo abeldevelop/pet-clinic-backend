@@ -1,4 +1,4 @@
-package com.abeldevelop.petclinic.services.customers.generated.resource;
+package com.abeldevelop.petclinic.services.customers.generated.resource.customer;
 
 import java.util.List;
 

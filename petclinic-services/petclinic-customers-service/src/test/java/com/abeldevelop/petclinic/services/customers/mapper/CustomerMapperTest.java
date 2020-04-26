@@ -6,9 +6,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.abeldevelop.petclinic.services.customers.generated.entity.CustomerEntity;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerCreateRequestResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerResponseResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerUpdateRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerCreateRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerUpdateRequestResource;
 import com.abeldevelop.petclinic.services.customers.objectmother.CustomerObjectMother;
 
 public class CustomerMapperTest {

@@ -1,6 +1,4 @@
-package com.abeldevelop.petclinic.services.customers.generated.resource;
-
-import java.time.LocalDate;
+package com.abeldevelop.petclinic.services.customers.generated.resource.pettype;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,10 +13,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class PetRequestResource {
+public class PetTypeRequestResource {
 
     private String name;
-	private LocalDate birthDate;
-    private Integer typeId;
     
 }

@@ -1,4 +1,4 @@
-package com.abeldevelop.petclinic.services.customers.generated.resource;
+package com.abeldevelop.petclinic.services.customers.generated.resource.customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,9 +13,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CustomerCreateRequestResource {
+public class CustomerResponseResource {
 
-	private String identificationDocument;
+    private Integer id;
+    private String identificationDocument;
     private String firstName;
     private String lastName;
     private String address;

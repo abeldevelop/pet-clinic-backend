@@ -1,0 +1,417 @@
+{
+	"info": {
+		"_postman_id": "70f8f5e9-c200-4f06-ad04-a8534b466141",
+		"name": "petclinic-integration-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "petclinic-customers-service",
+			"item": [
+				{
+					"name": "pet-types",
+					"item": [
+						{
+							"name": "CreatePetType-OK",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ca0f4df8-12ca-48ec-b75d-80c6163f4fe0",
+										"exec": [
+											"pm.environment.set(\"currentRequest\", \"CreatePetType-OK\");",
+											"",
+											"var responseJson = pm.response.json();",
+											"var responseCode = pm.response.code;",
+											"",
+											"var petTypeName = pm.environment.get(\"petTypeName\");",
+											"",
+											"pm.test(\"Response time is less than 1s\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"ID not null\", function () {",
+											"   pm.expect(responseJson.id).not.eql(null);",
+											"});",
+											"",
+											"pm.test(\"Name is correct\", function () {",
+											"   pm.expect(responseJson.name).to.eql(petTypeName);",
+											"});",
+											"",
+											"pm.test(\"Response code is 201\", function () {",
+											"    pm.expect(responseCode).to.eql(201);",
+											"});",
+											"",
+											"",
+											"",
+											"pm.environment.set(\"petTypeId\", responseJson.id);",
+											"",
+											"//WorkFlow",
+											"postman.setNextRequest(\"FindPetTypeById-OK\");"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "8331727f-7ab9-41ae-a033-d1b552a3cec5",
+										"exec": [
+											"var petTypeName = \"My Test Pet Type\";",
+											"",
+											"pm.environment.set(\"petTypeName\", petTypeName);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"{{petTypeName}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petclinic-customers-service-url}}/pet-types",
+									"host": [
+										"{{petclinic-customers-service-url}}"
+									],
+									"path": [
+										"pet-types"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdatePetType-OK",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ca0f4df8-12ca-48ec-b75d-80c6163f4fe0",
+										"exec": [
+											"pm.environment.set(\"currentRequest\", \"UpdatePetType-OK\");",
+											"",
+											"var responseCode = pm.response.code;",
+											"",
+											"pm.test(\"Response time is less than 1s\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"Response code is 204\", function () {",
+											"    pm.expect(responseCode).to.eql(204);",
+											"});",
+											"",
+											"",
+											"//WorkFlow",
+											"postman.setNextRequest(\"FindPetTypeById-OK\");"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "7afcadd5-70fb-44ad-9a25-a23308ee022b",
+										"exec": [
+											"var petTypeName = \"My Test Pet Type Updated\";",
+											"",
+											"pm.environment.set(\"petTypeName\", petTypeName);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"{{petTypeName}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petclinic-customers-service-url}}/pet-types/{{petTypeId}}",
+									"host": [
+										"{{petclinic-customers-service-url}}"
+									],
+									"path": [
+										"pet-types",
+										"{{petTypeId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeletePetTypeById-OK",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ca0f4df8-12ca-48ec-b75d-80c6163f4fe0",
+										"exec": [
+											"pm.environment.set(\"currentRequest\", \"DeletePetTypeById-OK\");",
+											"",
+											"var responseCode = pm.response.code;",
+											"",
+											"pm.test(\"Response time is less than 1s\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"Response code is 204\", function () {",
+											"    pm.expect(responseCode).to.eql(204);",
+											"});",
+											"",
+											"//WorkFlow",
+											"postman.setNextRequest(\"FindPetTypeById-NotFound\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{petclinic-customers-service-url}}/pet-types/{{petTypeId}}",
+									"host": [
+										"{{petclinic-customers-service-url}}"
+									],
+									"path": [
+										"pet-types",
+										"{{petTypeId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FindPetTypeById-OK",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ca0f4df8-12ca-48ec-b75d-80c6163f4fe0",
+										"exec": [
+											"var responseJson = pm.response.json();",
+											"var responseCode = pm.response.code;",
+											"var petTypeName = pm.environment.get(\"petTypeName\");",
+											"",
+											"pm.test(\"Response time is less than 1s\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"Name is correct\", function () {",
+											"   pm.expect(responseJson.name).to.eql(petTypeName);",
+											"});",
+											"",
+											"pm.test(\"Response code is 200\", function () {",
+											"    pm.expect(responseCode).to.eql(200);",
+											"});",
+											"",
+											"",
+											"",
+											"//WorkFlow",
+											"var currentRequest = pm.environment.get(\"currentRequest\");",
+											"var nextRequest = null;",
+											"",
+											"if(currentRequest === \"CreatePetType-OK\") {",
+											"    nextRequest = \"UpdatePetType-OK\";",
+											"} else if(currentRequest === \"UpdatePetType-OK\") {",
+											"    nextRequest = \"FindAllPetTypes-OK\";",
+											"}",
+											"",
+											"",
+											"postman.setNextRequest(nextRequest);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{petclinic-customers-service-url}}/pet-types/{{petTypeId}}",
+									"host": [
+										"{{petclinic-customers-service-url}}"
+									],
+									"path": [
+										"pet-types",
+										"{{petTypeId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FindPetTypeById-NotFound",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ca0f4df8-12ca-48ec-b75d-80c6163f4fe0",
+										"exec": [
+											"pm.environment.set(\"currentRequest\", \"FindPetTypeById-NotFound\");",
+											"",
+											"var responseJson = pm.response.json();",
+											"var responseCode = pm.response.code;",
+											"",
+											"pm.test(\"Response time is less than 1s\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"Response code is 404\", function () {",
+											"    pm.expect(responseCode).to.eql(404);",
+											"});",
+											"",
+											"",
+											"//WorkFlow",
+											"postman.setNextRequest(null);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{petclinic-customers-service-url}}/pet-types/{{petTypeId}}",
+									"host": [
+										"{{petclinic-customers-service-url}}"
+									],
+									"path": [
+										"pet-types",
+										"{{petTypeId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FindAllPetTypes-OK",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ca0f4df8-12ca-48ec-b75d-80c6163f4fe0",
+										"exec": [
+											"pm.environment.set(\"currentRequest\", \"FindAllPetTypes-OK\");",
+											"",
+											"var responseJson = pm.response.json();",
+											"var responseCode = pm.response.code;",
+											"var petTypeName = pm.environment.get(\"petTypeName\");",
+											"",
+											"pm.test(\"Response time is less than 1s\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"Name is correct\", function () {",
+											"    var existInList = false;",
+											"    responseJson.petTypes.forEach(",
+											"        element => {",
+											"            if(element.name === petTypeName) {",
+											"                existInList = true;",
+											"            }",
+											"        }",
+											"    );",
+											"",
+											"   pm.expect(existInList).to.eql(true);",
+											"});",
+											"",
+											"pm.test(\"Response code is 200\", function () {",
+											"    pm.expect(responseCode).to.eql(200);",
+											"});",
+											"",
+											"//WorkFlow",
+											"postman.setNextRequest(\"DeletePetTypeById-OK\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{petclinic-customers-service-url}}/pet-types",
+									"host": [
+										"{{petclinic-customers-service-url}}"
+									],
+									"path": [
+										"pet-types"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b0fff1ab-f67b-4807-8b1d-419dcb4f2491",
+				"type": "text/javascript",
+				"exec": [
+					"var discoveryServerUrl = pm.environment.get(\"petclinic-discovery-server-url\");",
+					"var gatewayEnvironment = pm.environment.get(\"gatewayEnvironment\");",
+					"",
+					"if(!gatewayEnvironment) {",
+					"",
+					"    pm.sendRequest({",
+					"        url: discoveryServerUrl+'/eureka/apps',",
+					"        method: 'GET',",
+					"    }, function (err, res) {",
+					"        var responseInJson = xml2Json(res.stream.toString());",
+					"        responseInJson.applications.application.forEach(",
+					"            application => {",
+					"                if(application.name.toLowerCase() === \"petclinic-customers-service\") {",
+					"                    var homePageUrl = application.instance.homePageUrl;",
+					"                    homePageUrl = homePageUrl.substring(0, homePageUrl.length -1);",
+					"                    pm.environment.set(\"petclinic-customers-service-url\", homePageUrl);",
+					"                }",
+					"            }",
+					"        );",
+					"    });",
+					"",
+					"} else {",
+					"    var gateway = pm.environment.get(\"petclinic-gateway-server-url\");",
+					"    pm.environment.set(\"petclinic-customers-service-url\", gateway + \"/api/customers\");",
+					"}",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2967e6fb-e24a-4b11-944e-f057c0082e94",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

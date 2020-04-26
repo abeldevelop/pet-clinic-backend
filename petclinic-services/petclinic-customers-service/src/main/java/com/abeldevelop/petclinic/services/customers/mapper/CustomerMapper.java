@@ -3,9 +3,9 @@ package com.abeldevelop.petclinic.services.customers.mapper;
 import org.springframework.stereotype.Component;
 
 import com.abeldevelop.petclinic.services.customers.generated.entity.CustomerEntity;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerCreateRequestResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerResponseResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerUpdateRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerCreateRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerResponseResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerUpdateRequestResource;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,8 +1,8 @@
 package com.abeldevelop.petclinic.services.customers.objectmother;
 
 import com.abeldevelop.petclinic.services.customers.generated.entity.CustomerEntity;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerCreateRequestResource;
-import com.abeldevelop.petclinic.services.customers.generated.resource.CustomerUpdateRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerCreateRequestResource;
+import com.abeldevelop.petclinic.services.customers.generated.resource.customer.CustomerUpdateRequestResource;
 
 public class CustomerObjectMother {
 
