@@ -4,6 +4,6 @@ import com.abeldevelop.petclinic.services.customers.generated.entity.CustomerEnt
 
 public interface CustomerDomainService {
 
-    public CustomerEntity findByIdentificationDocument(String identificationDocument);
+    public CustomerEntity findById(Integer id);
 	
 }

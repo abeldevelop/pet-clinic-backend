@@ -19,6 +19,6 @@ public class PetRequestResource {
 
     private String name;
 	private LocalDate birthDate;
-    private Integer typeId;
+    private Integer petTypeId;
     
 }

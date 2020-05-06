@@ -33,7 +33,7 @@ public class PetValidatorTest {
 	@Test
 	public void validatePetRequestResourceTypeIdNullOrEmpty() {
 		PetRequestResource petRequestResource = PetObjectMother.generatePetRequestResource();
-		petRequestResource.setTypeId(null);
+		petRequestResource.setPetTypeId(null);
 		assertThrows(BadRequestException.class, () -> petValidator.validate(petRequestResource));
 	}
 	

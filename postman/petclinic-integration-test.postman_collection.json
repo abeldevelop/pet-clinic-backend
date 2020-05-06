@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "70f8f5e9-c200-4f06-ad04-a8534b466141",
 		"name": "petclinic-integration-test",
+		"description": "1-petclinic-customers-service WorkFlow\r\n    1.1-CreatePetType-OK\r\n    1.2-FindPetTypeById-OK\r\n    1.3-UpdatePetType-OK\r\n    1.4-FindPetTypeById-OK\r\n    1.5-FindAllPetTypes-OK\r\n\r\n    1.6-CreateCustomer-OK\r\n    1.7-FindCustomerById-OK\r\n    1.8-UpdateCustomer-OK\r\n    1.9-FindCustomerById-OK\r\n    1.10-FindAllCustomers-OK\r\n\r\n    1.11-CreatePet-OK\r\n    1.12-FindPetById-OK\r\n    1.13-UpdatePet-OK\r\n    1.14-FindPetById-OK\r\n    1.15-FindAllPets-OK\r\n    \r\n    1.16-DeletePetById-OK\r\n    1.17-FindPetById-NotFound\r\n    \r\n    1.18-DeleteCustomerById-OK\r\n    1.19-FindCustomerById-NotFound\r\n    \r\n    1.20-DeletePetTypeById-OK\r\n    1.21-FindPetTypeById-NotFound",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -373,7 +374,7 @@
 											"var responseJson = pm.response.json();",
 											"var responseCode = pm.response.code;",
 											"",
-											"var customerIdentificationDocument = pm.environment.get(\"customerIdentificationDocument\");",
+											"var customerId = pm.environment.get(\"customerId\");",
 											"",
 											"pm.test(\"Response time is less than 1s\", function () {",
 											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
@@ -383,18 +384,14 @@
 											"   pm.expect(responseJson.id).not.eql(null);",
 											"});",
 											"",
-											"pm.test(\"Identification Document is correct\", function () {",
-											"   pm.expect(responseJson.identificationDocument).to.eql(customerIdentificationDocument);",
-											"});",
-											"",
 											"pm.test(\"Response code is 201\", function () {",
 											"    pm.expect(responseCode).to.eql(201);",
 											"});",
 											"",
-											"",
+											"pm.environment.set(\"customerId\", responseJson.id);",
 											"",
 											"//WorkFlow",
-											"postman.setNextRequest(\"FindCustomerByIdentificationDocument-OK\");"
+											"postman.setNextRequest(\"FindCustomerById-OK\");"
 										],
 										"type": "text/javascript"
 									}
@@ -404,10 +401,8 @@
 									"script": {
 										"id": "82669f4c-302e-4f39-b8aa-d6efb703bf7d",
 										"exec": [
-											"var customerIdentificationDocument = \"0123456789\";",
 											"var customerFirstName = \"My Test Customer First Name\";",
 											"",
-											"pm.environment.set(\"customerIdentificationDocument\", customerIdentificationDocument);",
 											"pm.environment.set(\"customerFirstName\", customerFirstName);"
 										],
 										"type": "text/javascript"
@@ -419,7 +414,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"identificationDocument\": \"{{customerIdentificationDocument}}\",\n    \"firstName\": \"{{customerFirstName}}\",\n    \"lastName\": \"My Test Customer Last Name\",\n    \"address\": \"My Test Customer Address\",\n    \"city\": \"My Test Customer City\",\n    \"telephone\": \"123456789\"\n}",
+									"raw": "{\n\t\"identificationDocument\": \"0123456789\",\n    \"firstName\": \"{{customerFirstName}}\",\n    \"lastName\": \"My Test Customer Last Name\",\n    \"address\": \"My Test Customer Address\",\n    \"city\": \"My Test Customer City\",\n    \"telephone\": \"123456789\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -460,7 +455,7 @@
 											"",
 											"",
 											"//WorkFlow",
-											"postman.setNextRequest(\"FindCustomerByIdentificationDocument-OK\");"
+											"postman.setNextRequest(\"FindCustomerById-OK\");"
 										],
 										"type": "text/javascript"
 									}
@@ -491,20 +486,20 @@
 									}
 								},
 								"url": {
-									"raw": "{{petclinic-customers-service-url}}/customers/{{customerIdentificationDocument}}",
+									"raw": "{{petclinic-customers-service-url}}/customers/{{customerId}}",
 									"host": [
 										"{{petclinic-customers-service-url}}"
 									],
 									"path": [
 										"customers",
-										"{{customerIdentificationDocument}}"
+										"{{customerId}}"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "DeleteCustomerByIdentificationDocument-OK",
+							"name": "DeleteCustomerById-OK",
 							"event": [
 								{
 									"listen": "test",
@@ -522,7 +517,7 @@
 											"});",
 											"",
 											"//WorkFlow",
-											"postman.setNextRequest(\"FindCustomerByIdentificationDocument-NotFound\");"
+											"postman.setNextRequest(\"FindCustomerById-NotFound\");"
 										],
 										"type": "text/javascript"
 									}
@@ -532,20 +527,20 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{petclinic-customers-service-url}}/customers/{{customerIdentificationDocument}}",
+									"raw": "{{petclinic-customers-service-url}}/customers/{{customerId}}",
 									"host": [
 										"{{petclinic-customers-service-url}}"
 									],
 									"path": [
 										"customers",
-										"{{customerIdentificationDocument}}"
+										"{{customerId}}"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "FindCustomerByIdentificationDocument-OK",
+							"name": "FindCustomerById-OK",
 							"event": [
 								{
 									"listen": "test",
@@ -591,20 +586,20 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{petclinic-customers-service-url}}/customers/{{customerIdentificationDocument}}",
+									"raw": "{{petclinic-customers-service-url}}/customers/{{customerId}}",
 									"host": [
 										"{{petclinic-customers-service-url}}"
 									],
 									"path": [
 										"customers",
-										"{{customerIdentificationDocument}}"
+										"{{customerId}}"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "FindCustomerByIdentificationDocument-NotFound",
+							"name": "FindCustomerById-NotFound",
 							"event": [
 								{
 									"listen": "test",
@@ -634,13 +629,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{petclinic-customers-service-url}}/customers/{{customerIdentificationDocument}}",
+									"raw": "{{petclinic-customers-service-url}}/customers/{{customerId}}",
 									"host": [
 										"{{petclinic-customers-service-url}}"
 									],
 									"path": [
 										"customers",
-										"{{customerIdentificationDocument}}"
+										"{{customerId}}"
 									]
 								}
 							},
@@ -695,7 +690,7 @@
 											"});",
 											"",
 											"//WorkFlow",
-											"postman.setNextRequest(\"DeleteCustomerByIdentificationDocument-OK\");"
+											"postman.setNextRequest(\"CreatePet-OK\");"
 										],
 										"type": "text/javascript"
 									}
@@ -711,6 +706,359 @@
 									],
 									"path": [
 										"customers"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "pet",
+					"item": [
+						{
+							"name": "CreatePet-OK",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "c7ac5413-3547-4533-aa4a-1766c5f49363",
+										"exec": [
+											"pm.environment.set(\"currentRequest\", \"CreatePet-OK\");",
+											"",
+											"var responseJson = pm.response.json();",
+											"var responseCode = pm.response.code;",
+											"",
+											"pm.test(\"Response time is less than 1s\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"ID not null\", function () {",
+											"   pm.expect(responseJson.id).not.eql(null);",
+											"});",
+											"",
+											"pm.test(\"Response code is 201\", function () {",
+											"    pm.expect(responseCode).to.eql(201);",
+											"});",
+											"",
+											"pm.environment.set(\"petId\", responseJson.id);",
+											"",
+											"//WorkFlow",
+											"postman.setNextRequest(\"FindPetById-OK\");"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "dc1bd161-9c32-4db8-9075-d4ac218fc818",
+										"exec": [
+											"var petName = \"My Test Pet\";",
+											"",
+											"pm.environment.set(\"petName\", petName);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"{{petName}}\",\n    \"birthDate\": \"2016-01-25\",\n    \"petTypeId\": \"{{petTypeId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petclinic-customers-service-url}}/customers/{{customerId}}/pets",
+									"host": [
+										"{{petclinic-customers-service-url}}"
+									],
+									"path": [
+										"customers",
+										"{{customerId}}",
+										"pets"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdatePet-OK",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "dd3f10b4-6b14-416b-93b7-b1132092137f",
+										"exec": [
+											"pm.environment.set(\"currentRequest\", \"UpdatePet-OK\");",
+											"",
+											"var responseCode = pm.response.code;",
+											"",
+											"pm.test(\"Response time is less than 1s\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"Response code is 204\", function () {",
+											"    pm.expect(responseCode).to.eql(204);",
+											"});",
+											"",
+											"",
+											"//WorkFlow",
+											"postman.setNextRequest(\"FindPetById-OK\");"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "a98bce43-0266-4593-8b7e-cea47b77d85b",
+										"exec": [
+											"var petName = \"Updated Test Pet\";",
+											"",
+											"pm.environment.set(\"petName\", petName);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"name\": \"{{petName}}\",\n    \"birthDate\": \"2016-01-25\",\n    \"petTypeId\": \"{{petTypeId}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{petclinic-customers-service-url}}/customers/{{customerId}}/pets/{{petId}}",
+									"host": [
+										"{{petclinic-customers-service-url}}"
+									],
+									"path": [
+										"customers",
+										"{{customerId}}",
+										"pets",
+										"{{petId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeletePetById-OK",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5b140d92-8eab-41ca-a92f-36920096d34c",
+										"exec": [
+											"var responseCode = pm.response.code;",
+											"",
+											"pm.test(\"Response time is less than 1s\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"Response code is 204\", function () {",
+											"    pm.expect(responseCode).to.eql(204);",
+											"});",
+											"",
+											"//WorkFlow",
+											"postman.setNextRequest(\"FindPetById-NotFound\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{petclinic-customers-service-url}}/customers/{{customerId}}/pets/{{petId}}",
+									"host": [
+										"{{petclinic-customers-service-url}}"
+									],
+									"path": [
+										"customers",
+										"{{customerId}}",
+										"pets",
+										"{{petId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FindPetById-OK",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "659d1704-d5c8-4a8a-b451-3cc72438fdad",
+										"exec": [
+											"var responseJson = pm.response.json();",
+											"var responseCode = pm.response.code;",
+											"var petName = pm.environment.get(\"petName\");",
+											"",
+											"pm.test(\"Response time is less than 1s\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"Name is correct\", function () {",
+											"   pm.expect(responseJson.name).to.eql(petName);",
+											"});",
+											"",
+											"pm.test(\"Response code is 200\", function () {",
+											"    pm.expect(responseCode).to.eql(200);",
+											"});",
+											"",
+											"",
+											"",
+											"//WorkFlow",
+											"var currentRequest = pm.environment.get(\"currentRequest\");",
+											"var nextRequest = null;",
+											"",
+											"if(currentRequest === \"CreatePet-OK\") {",
+											"    nextRequest = \"UpdatePet-OK\";",
+											"} else if(currentRequest === \"UpdatePet-OK\") {",
+											"    nextRequest = \"FindAllPets-OK\";",
+											"}",
+											"",
+											"pm.environment.unset(\"currentRequest\");",
+											"postman.setNextRequest(nextRequest);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{petclinic-customers-service-url}}/customers/{{customerId}}/pets/{{petId}}",
+									"host": [
+										"{{petclinic-customers-service-url}}"
+									],
+									"path": [
+										"customers",
+										"{{customerId}}",
+										"pets",
+										"{{petId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FindPetById-NotFound",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "44fd1c2c-6a77-4929-b769-e4df2f601f41",
+										"exec": [
+											"var responseJson = pm.response.json();",
+											"var responseCode = pm.response.code;",
+											"",
+											"pm.test(\"Response time is less than 1s\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"Response code is 404\", function () {",
+											"    pm.expect(responseCode).to.eql(404);",
+											"});",
+											"",
+											"",
+											"//WorkFlow",
+											"postman.setNextRequest(\"DeleteCustomerById-OK\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{petclinic-customers-service-url}}/customers/{{customerId}}/pets/{{petId}}",
+									"host": [
+										"{{petclinic-customers-service-url}}"
+									],
+									"path": [
+										"customers",
+										"{{customerId}}",
+										"pets",
+										"{{petId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FindAllPets-OK",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1e330a41-90f3-47ca-93eb-070218adf26c",
+										"exec": [
+											"var responseJson = pm.response.json();",
+											"var responseCode = pm.response.code;",
+											"",
+											"var petName = pm.environment.get(\"petName\");",
+											"",
+											"pm.test(\"Response time is less than 1s\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+											"});",
+											"",
+											"pm.test(\"Name is in list\", function () {",
+											"    var existInList = false;",
+											"    responseJson.pets.forEach(",
+											"        element => {",
+											"            if(element.name === petName) {",
+											"                existInList = true;",
+											"            }",
+											"        }",
+											"    );",
+											"   pm.expect(existInList).to.eql(true);",
+											"});",
+											"",
+											"",
+											"pm.test(\"Response code is 200\", function () {",
+											"    pm.expect(responseCode).to.eql(200);",
+											"});",
+											"",
+											"//WorkFlow",
+											"postman.setNextRequest(\"DeletePetById-OK\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{petclinic-customers-service-url}}/customers/{{customerId}}/pets",
+									"host": [
+										"{{petclinic-customers-service-url}}"
+									],
+									"path": [
+										"customers",
+										"{{customerId}}",
+										"pets"
 									]
 								}
 							},

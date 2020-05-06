@@ -72,8 +72,8 @@ public class CustomerControllerTest extends CommonTest {
 		
 		//when
 		ResponseCall<Void> response = makePutCall(RequestCall.builder()
-				.endpoint("/customers/{identificationDocument}")
-				.pathParam(customerEntity.getIdentificationDocument())
+				.endpoint("/customers/{id}")
+				.pathParam(customerEntity.getId())
 				.body(customerUpdateRequestResource)
 				.build(), 
 				Void.class);
@@ -97,8 +97,8 @@ public class CustomerControllerTest extends CommonTest {
 		
 		//when
 		ResponseCall<Void> response = makeDeleteCall(RequestCall.builder()
-				.endpoint("/customers/{identificationDocument}")
-				.pathParam(customerEntity.getIdentificationDocument())
+				.endpoint("/customers/{id}")
+				.pathParam(customerEntity.getId())
 				.build(), 
 				Void.class);
 		
@@ -116,8 +116,8 @@ public class CustomerControllerTest extends CommonTest {
 		
 		//when
 		ResponseCall<CustomerResponseResource> response = makeGetCall(RequestCall.builder()
-				.endpoint("/customers/{identificationDocument}")
-				.pathParam(customerEntity.getIdentificationDocument())
+				.endpoint("/customers/{id}")
+				.pathParam(customerEntity.getId())
 				.build(), 
 				CustomerResponseResource.class);
 		
@@ -135,17 +135,17 @@ public class CustomerControllerTest extends CommonTest {
 	public void testFindCustomerByIdEndpointNotFound() throws Exception {
 		//given
 		customerSpringDataRepository.deleteAll();
-		String identificationDocument = "1";
+		Integer id = 1;
 		
 		//when
 		ResponseCall<ErrorResponseResource> response = makeGetCall(RequestCall.builder()
-				.endpoint("/customers/{identificationDocument}")
-				.pathParam(identificationDocument)
+				.endpoint("/customers/{id}")
+				.pathParam(id)
 				.build(), 
 				ErrorResponseResource.class);
 		
 		//then
-		String expectedErrorMessage = messageFormatter.format(CustomerConstants.CUSTOMER_WITH_IDENTIFICATION_DOCUMENT_NOT_FOUND_ERROR_MESSAGE, Arrays.asList(identificationDocument));
+		String expectedErrorMessage = messageFormatter.format(CustomerConstants.CUSTOMER_WITH_IDENTIFICATION_DOCUMENT_NOT_FOUND_ERROR_MESSAGE, Arrays.asList(id));
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatus());
 		assertEquals(CustomerConstants.CUSTOMER_WITH_IDENTIFICATION_DOCUMENT_NOT_FOUND_ERROR_CODE, response.getBody().getCode());
 		assertEquals(expectedErrorMessage, response.getBody().getMessage());

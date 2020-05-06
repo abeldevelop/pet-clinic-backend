@@ -11,4 +11,8 @@ public class CustomerSpecification {
 	public Specification<CustomerEntity> firstNameLike(String firstName) {
 		return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(criteriaBuilder.upper(root.get("firstName")), "%" + firstName.toUpperCase() + "%");
 	}
+	
+	public Specification<CustomerEntity> identificationDocumentLike(String identificationDocument) {
+		return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(criteriaBuilder.upper(root.get("identificationDocument")), "%" + identificationDocument.toUpperCase() + "%");
+	}
 }

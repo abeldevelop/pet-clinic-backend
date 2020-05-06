@@ -14,6 +14,8 @@ public interface CustomerRepository {
 	
 	public void executeDelete(CustomerEntity customerEntity);
 	
+	public Optional<CustomerEntity> executeFindById(Integer id);
+	
 	public Optional<CustomerEntity> executeFindByIdentificationDocument(String identificationDocument);
 	
 	public Page<CustomerEntity> executeFindAll(Pageable page);

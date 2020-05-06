@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.abeldevelop.petclinic.library.common.exception.NotFoundException;
+import com.abeldevelop.petclinic.services.customers.generated.entity.CustomerEntity;
 import com.abeldevelop.petclinic.services.customers.generated.entity.PetEntity;
 import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetPaginationResponseResource;
 import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetRequestResource;
@@ -16,6 +17,7 @@ import com.abeldevelop.petclinic.services.customers.service.CustomerDomainServic
 import com.abeldevelop.petclinic.services.customers.service.PetDomainService;
 import com.abeldevelop.petclinic.services.customers.service.PetService;
 import com.abeldevelop.petclinic.services.customers.service.PetTypeDomainService;
+import com.abeldevelop.petclinic.services.customers.util.constants.PetConstants;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,44 +33,54 @@ public class PetServiceImpl implements PetService, PetDomainService {
 	
 	@Override
 	@Transactional
-	public PetResponseResource executeCreate(String identificationDocument, PetRequestResource petRequestResource) {
+	public PetResponseResource executeCreate(Integer customerId, PetRequestResource petRequestResource) {
 
 		PetEntity petEntity = petMapper.map(petRequestResource);
-		petEntity.setCustomer(customerDomainService.findByIdentificationDocument(identificationDocument));
-		petEntity.setType(petTypeDomainService.findPetTypeById(petRequestResource.getTypeId()));
+		petEntity.setCustomer(customerDomainService.findById(customerId));
+		petEntity.setType(petTypeDomainService.findPetTypeById(petRequestResource.getPetTypeId()));
 		
 		return petMapper.map(petRepository.executeSave(petEntity));
 	}
 
 	@Override
 	@Transactional
-	public void executeUpdate(String identificationDocument, Integer petId, PetRequestResource petRequestResource) {
-		PetEntity petEntity = findPetById(petId);
+	public void executeUpdate(Integer customerId, Integer petId, PetRequestResource petRequestResource) {
+		CustomerEntity customerEntity = customerDomainService.findById(customerId);
+		PetEntity petEntity = findByIdAndCustomer(customerEntity, petId);
 		
 		petMapper.map(petEntity, petRequestResource);
-		petEntity.setCustomer(customerDomainService.findByIdentificationDocument(identificationDocument));
-		petEntity.setType(petTypeDomainService.findPetTypeById(petRequestResource.getTypeId()));
+		petEntity.setCustomer(customerEntity);
+		petEntity.setType(petTypeDomainService.findPetTypeById(petRequestResource.getPetTypeId()));
 		
 		petMapper.map(petRepository.executeSave(petEntity));
 	}
 
+	
 	@Override
-	@Transactional(readOnly = true)
-	public PetResponseResource executeFindById(String identificationDocument, Integer petId) {
-		return petMapper.map(petRepository.executeFindByIdAndCustomer(petId, customerDomainService.findByIdentificationDocument(identificationDocument)).orElseThrow(() -> new NotFoundException(0, "No exist Pet with ID: '" + petId + "' for Customer with Identification Document: '" + identificationDocument + "'")));
+	@Transactional
+	public void executeDeleteById(Integer customerId, Integer petId) {
+		PetEntity petEntity = findByIdAndCustomer(customerDomainService.findById(customerId), petId);
+		petRepository.executeDelete(petEntity);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public PetEntity findPetById(Integer petId) {
-		return petRepository.executeFindById(petId).orElseThrow(() -> new NotFoundException(0, "No exist Pet with ID: '" + petId + "'"));
+	public PetResponseResource executeFindByIdAndCustomer(Integer customerId, Integer petId) {
+		return petMapper.map(findByIdAndCustomer(customerDomainService.findById(customerId), petId));
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public PetEntity findByIdAndCustomer(CustomerEntity customerEntity, Integer petId) {
+		return petRepository.executeFindByIdAndCustomer(petId, customerEntity)
+				.orElseThrow(() -> new NotFoundException(PetConstants.PET_AND_CUSTOMER_NOT_FOUND_ERROR_CODE, PetConstants.PET_AND_CUSTOMER_NOT_FOUND_ERROR_MESSAGE, petId, customerEntity.getId()));
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public PetPaginationResponseResource executeFindAll(String identificationDocument) {
+	public PetPaginationResponseResource executeFindAll(Integer customerId, Integer page, Integer size, String name) {
 		return PetPaginationResponseResource.builder()
-				.pets(petRepository.executeFindByCustomer(customerDomainService.findByIdentificationDocument(identificationDocument)).stream().map(petMapper::map).collect(Collectors.toList()))
+				.pets(petRepository.executeFindByCustomer(customerDomainService.findById(customerId)).stream().map(petMapper::map).collect(Collectors.toList()))
 				.build();
 	}
 

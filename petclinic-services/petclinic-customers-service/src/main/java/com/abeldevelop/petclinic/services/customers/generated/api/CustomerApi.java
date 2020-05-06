@@ -23,23 +23,24 @@ public interface CustomerApi {
     @ResponseStatus(HttpStatus.CREATED)
 	public CustomerResponseResource executeCreateCustomer(@RequestBody CustomerCreateRequestResource customerCreateRequestResource);
 	
-	@PutMapping("/{identificationDocument}")
+	@PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-	public void executeUpdateCustomer(@PathVariable("identificationDocument") String identificationDocument, @RequestBody CustomerUpdateRequestResource customerUpdateRequestResource);
+	public void executeUpdateCustomer(@PathVariable("id") Integer id, @RequestBody CustomerUpdateRequestResource customerUpdateRequestResource);
 	
-	@DeleteMapping("/{identificationDocument}")
+	@DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-	public void executeDeleteCustomerByIdentificationDocument(@PathVariable("identificationDocument") String identificationDocument);
+	public void executeDeleteCustomerById(@PathVariable("id") Integer id);
 	
-	@GetMapping(value = "/{identificationDocument}")
+	@GetMapping(value = "/{id}")
 	@ResponseStatus(HttpStatus.OK)
-    public CustomerResponseResource executeFindCustomerByIdentificationDocument(@PathVariable("identificationDocument") String identificationDocument);
+    public CustomerResponseResource executeFindCustomerById(@PathVariable("id") Integer id);
 	
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
     public CustomerPaginationResponseResource findAllCustomers(
     		@RequestParam(name = "page", required = false) Integer page, 
     		@RequestParam(name = "size", required = false) Integer size,
+    		@RequestParam(name = "identification-document", required = false) String identificationDocument,
     		@RequestParam(name = "first-name", required = false) String firstName);
 	
 }

@@ -30,6 +30,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 	}
 	
 	@Override
+	public Optional<CustomerEntity> executeFindById(Integer id) {
+		return customerSpringDataRepository.findById(id);
+	}
+	
+	@Override
 	public Optional<CustomerEntity> executeFindByIdentificationDocument(String identificationDocument) {
 		return customerSpringDataRepository.findByIdentificationDocument(identificationDocument);
 	}

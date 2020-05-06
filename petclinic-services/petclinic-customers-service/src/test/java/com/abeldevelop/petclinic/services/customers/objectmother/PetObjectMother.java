@@ -15,7 +15,7 @@ public class PetObjectMother {
 		return PetRequestResource.builder()
 				.name("namePetRequestResource")
 				.birthDate(LocalDate.of(2020, 4, 15))
-				.typeId(1)
+				.petTypeId(1)
 				.build();
 	}
 	

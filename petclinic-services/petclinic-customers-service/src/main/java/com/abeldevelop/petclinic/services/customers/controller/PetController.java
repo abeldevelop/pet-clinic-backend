@@ -1,7 +1,5 @@
 package com.abeldevelop.petclinic.services.customers.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abeldevelop.petclinic.library.common.util.LoggerUtils;
@@ -26,30 +24,34 @@ public class PetController implements PetApi {
 	private final PetValidator petValidator;
 	
 	@Override
-	@ResponseStatus(HttpStatus.CREATED)
-	public PetResponseResource executeCreatePet(String identificationDocument, PetRequestResource petRequestResource) {
-		LoggerUtils.info(log, "PetController.executeCreatePet Data IN => identificationDocument: {}, petRequestResource: {}", identificationDocument, petRequestResource);
+	public PetResponseResource executeCreatePet(Integer customerId, PetRequestResource petRequestResource) {
+		LoggerUtils.info(log, "PetController.executeCreatePet Data IN => customerId: {}, petRequestResource: {}", customerId, petRequestResource);
 		petValidator.validate(petRequestResource);
-		return petService.executeCreate(identificationDocument, petRequestResource);
+		return petService.executeCreate(customerId, petRequestResource);
     }
 	
 	@Override
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void executeUpdatePet(String identificationDocument, Integer petId, PetRequestResource petRequestResource) {
-		LoggerUtils.info(log, "PetController.executeUpdatePet Data IN => identificationDocument: {}, petId: {}, petRequestResource: {}", identificationDocument, petId, petRequestResource);
+	public void executeUpdatePet(Integer customerId, Integer petId, PetRequestResource petRequestResource) {
+		LoggerUtils.info(log, "PetController.executeUpdatePet Data IN => customerId: {}, petId: {}, petRequestResource: {}", customerId, petId, petRequestResource);
 		petValidator.validate(petRequestResource);
-		petService.executeUpdate(identificationDocument, petId, petRequestResource);
+		petService.executeUpdate(customerId, petId, petRequestResource);
     }
 
 	@Override
-	public PetResponseResource executeFindPetById(String identificationDocument, Integer petId) {
-    	LoggerUtils.info(log, "PetController.executeFindPetById Data IN => identificationDocument: {}, petId: {}", identificationDocument, petId);
-        return petService.executeFindById(identificationDocument, petId);
+	public void executeDeletePetById(Integer customerId, Integer petId) {
+		LoggerUtils.info(log, "PetController.executeDeletePetById Data IN => customerId: {}, petId: {}", customerId, petId);
+		petService.executeDeleteById(customerId, petId);
+	}
+	
+	@Override
+	public PetResponseResource executeFindPetById(Integer customerId, Integer petId) {
+		LoggerUtils.info(log, "PetController.executeFindPetById Data IN => customerId: {}, petId: {}", customerId, petId);
+        return petService.executeFindByIdAndCustomer(customerId, petId);
     }
 
 	@Override
-	public PetPaginationResponseResource executeFindAllPets(String identificationDocument) {
-    	LoggerUtils.info(log, "PetController.executeFindAllPets Data IN => identificationDocument: {}", identificationDocument);
-        return petService.executeFindAll(identificationDocument);
+	public PetPaginationResponseResource executeFindAllPets(Integer customerId, Integer page, Integer size, String name) {
+		LoggerUtils.info(log, "PetController.executeFindAllPets Data IN => customerId: {}, page: {}, size: {}, name: {}", customerId, page, size, name);
+        return petService.executeFindAll(customerId, page, size, name);
     }
 }

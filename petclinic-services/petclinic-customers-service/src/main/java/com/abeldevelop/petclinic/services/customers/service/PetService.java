@@ -6,12 +6,14 @@ import com.abeldevelop.petclinic.services.customers.generated.resource.pet.PetRe
 
 public interface PetService {
 
-    public PetResponseResource executeCreate(String identificationDocument, PetRequestResource petRequestResource);
+    public PetResponseResource executeCreate(Integer customerId, PetRequestResource petRequestResource);
 	
-    public void executeUpdate(String identificationDocument, Integer petId, PetRequestResource petRequestResource);
+    public void executeUpdate(Integer customerId, Integer petId, PetRequestResource petRequestResource);
 
-    public PetResponseResource executeFindById(String identificationDocument, Integer petId);
+    public void executeDeleteById(Integer customerId, Integer petId);
+    
+    public PetResponseResource executeFindByIdAndCustomer(Integer customerId, Integer petId);
 
-    public PetPaginationResponseResource executeFindAll(String identificationDocument);
+    public PetPaginationResponseResource executeFindAll(Integer customerId, Integer page, Integer size, String name);
     
 }

@@ -14,6 +14,8 @@ public interface PetRepository {
 	
 	public Optional<PetEntity> executeFindByIdAndCustomer(Integer petId, CustomerEntity customerEntity);
 	
+	public void executeDelete(PetEntity petEntity);
+	
 	public List<PetEntity> executeFindByCustomer(CustomerEntity customerEntity);
 	
 }

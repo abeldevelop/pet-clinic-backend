@@ -9,12 +9,12 @@ public interface CustomerService {
 
     public CustomerResponseResource executeCreate(CustomerCreateRequestResource customerCreateRequestResource);
 	
-    public void executeUpdate(String identificationDocument, CustomerUpdateRequestResource customerUpdateRequestResource);
+    public void executeUpdate(Integer id, CustomerUpdateRequestResource customerUpdateRequestResource);
 	
-    public void executeDelete(String identificationDocument);
+    public void executeDeleteById(Integer id);
 	
-    public CustomerResponseResource executeFindByIdentificationDocument(String identificationDocument);
+    public CustomerResponseResource executeFindById(Integer id);
     
-    public CustomerPaginationResponseResource executeFindAll(Integer page, Integer size, String firstName);
+    public CustomerPaginationResponseResource executeFindAll(Integer page, Integer size, String identificationDocument, String firstName);
 	
 }

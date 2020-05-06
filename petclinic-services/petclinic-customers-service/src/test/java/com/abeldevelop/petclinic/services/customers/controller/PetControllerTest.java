@@ -3,6 +3,8 @@ package com.abeldevelop.petclinic.services.customers.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.Arrays;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.abeldevelop.petclinic.library.common.component.MessageFormatter;
 import com.abeldevelop.petclinic.library.common.resources.ErrorResponseResource;
 import com.abeldevelop.petclinic.library.test.CommonTest;
 import com.abeldevelop.petclinic.library.test.domain.RequestCall;
@@ -27,6 +30,7 @@ import com.abeldevelop.petclinic.services.customers.objectmother.PetTypeObjectMo
 import com.abeldevelop.petclinic.services.customers.repository.springdata.CustomerSpringDataRepository;
 import com.abeldevelop.petclinic.services.customers.repository.springdata.PetSpringDataRepository;
 import com.abeldevelop.petclinic.services.customers.repository.springdata.PetTypeSpringDataRepository;
+import com.abeldevelop.petclinic.services.customers.util.constants.PetConstants;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -42,6 +46,9 @@ public class PetControllerTest extends CommonTest {
 	@Autowired
 	private PetTypeSpringDataRepository petTypeSpringDataRepository;
 	
+	@Autowired
+	private MessageFormatter messageFormatter;
+	
 	@Test
 	public void testCreatePetEndpoint() throws Exception {
 		//given
@@ -50,12 +57,12 @@ public class PetControllerTest extends CommonTest {
 		CustomerEntity customerEntity = customerSpringDataRepository.save(CustomerObjectMother.generateCustomerEntity());
 		PetTypeEntity petTypeEntity = petTypeSpringDataRepository.save(PetTypeObjectMother.generatePetTypeEntity());
 		PetRequestResource petRequestResource = PetObjectMother.generatePetRequestResource();
-		petRequestResource.setTypeId(petTypeEntity.getId());
+		petRequestResource.setPetTypeId(petTypeEntity.getId());
 		
 		//when
 		ResponseCall<PetResponseResource> response = makePostCall(RequestCall.builder()
-				.endpoint("/customers/{identificationDocument}/pets")
-				.pathParam(customerEntity.getIdentificationDocument())
+				.endpoint("/customers/{customerId}/pets")
+				.pathParam(customerEntity.getId())
 				.body(petRequestResource)
 				.build(), 
 				PetResponseResource.class);
@@ -77,12 +84,12 @@ public class PetControllerTest extends CommonTest {
 		CustomerEntity customerEntity = customerSpringDataRepository.save(CustomerObjectMother.generateCustomerEntity());
 		PetTypeEntity petTypeEntity = PetTypeObjectMother.generatePetTypeEntity();
 		PetRequestResource petRequestResource = PetObjectMother.generatePetRequestResource();
-		petRequestResource.setTypeId(petTypeEntity.getId());
+		petRequestResource.setPetTypeId(petTypeEntity.getId());
 		
 		//when
 		ResponseCall<ErrorResponseResource> response = makePostCall(RequestCall.builder()
-				.endpoint("/customers/{identificationDocument}/pets")
-				.pathParam(customerEntity.getIdentificationDocument())
+				.endpoint("/customers/{customerId}/pets")
+				.pathParam(customerEntity.getId())
 				.body(petRequestResource)
 				.build(), 
 				ErrorResponseResource.class);
@@ -105,12 +112,12 @@ public class PetControllerTest extends CommonTest {
 		petEntity.setType(petTypeEntity);
 		petEntity = petSpringDataRepository.save(petEntity);
 		PetRequestResource petRequestResource = PetObjectMother.generatePetRequestResourceFromPetEntity(petEntity);
-		petRequestResource.setTypeId(petTypeEntity.getId());
+		petRequestResource.setPetTypeId(petTypeEntity.getId());
 		
 		//when
 		ResponseCall<Void> response = makePutCall(RequestCall.builder()
-				.endpoint("/customers/{identificationDocument}/pets/{petId}")
-				.pathParam(customerEntity.getIdentificationDocument()).pathParam(petEntity.getId())
+				.endpoint("/customers/{customerId}/pets/{petId}")
+				.pathParam(customerEntity.getId()).pathParam(petEntity.getId())
 				.body(petRequestResource)
 				.build(), 
 				Void.class);
@@ -136,8 +143,8 @@ public class PetControllerTest extends CommonTest {
 		
 		//when
 		ResponseCall<PetResponseResource> response = makeGetCall(RequestCall.builder()
-				.endpoint("/customers/{identificationDocument}/pets/{petId}")
-				.pathParam(customerEntity.getIdentificationDocument()).pathParam(petEntity.getId())
+				.endpoint("/customers/{customerId}/pets/{petId}")
+				.pathParam(customerEntity.getId()).pathParam(petEntity.getId())
 				.build(), 
 				PetResponseResource.class);
 		
@@ -156,18 +163,19 @@ public class PetControllerTest extends CommonTest {
 		customerSpringDataRepository.deleteAll();
 		petTypeSpringDataRepository.deleteAll();
 		CustomerEntity customerEntity = customerSpringDataRepository.save(CustomerObjectMother.generateCustomerEntity());
+		Integer petId = 1;
 		
 		//when
 		ResponseCall<ErrorResponseResource> response = makeGetCall(RequestCall.builder()
-				.endpoint("/customers/{identificationDocument}/pets/{petId}")
-				.pathParam(customerEntity.getIdentificationDocument()).pathParam(1)
+				.endpoint("/customers/{customerId}/pets/{petId}")
+				.pathParam(customerEntity.getId()).pathParam(petId)
 				.build(), 
 				ErrorResponseResource.class);
 		
 		//then
+		String expectedErrorMessage = messageFormatter.format(PetConstants.PET_AND_CUSTOMER_NOT_FOUND_ERROR_MESSAGE, Arrays.asList(petId, customerEntity.getId()));
 		assertEquals(HttpStatus.NOT_FOUND, response.getStatus());
-		assertEquals(true, response.getBody().getMessage().contains("No exist Pet with ID:"));
-		assertEquals(true, response.getBody().getMessage().contains("for Customer with Identification Document:"));
+		assertEquals(expectedErrorMessage, response.getBody().getMessage());
 	}
 	
 	@Test
@@ -184,8 +192,8 @@ public class PetControllerTest extends CommonTest {
 		
 		//when
 		ResponseCall<PetPaginationResponseResource> response = makeGetCall(RequestCall.builder()
-				.endpoint("/customers/{identificationDocument}/pets")
-				.pathParam(customerEntity.getIdentificationDocument())
+				.endpoint("/customers/{customerId}/pets")
+				.pathParam(customerEntity.getId())
 				.build(), 
 				PetPaginationResponseResource.class);
 		

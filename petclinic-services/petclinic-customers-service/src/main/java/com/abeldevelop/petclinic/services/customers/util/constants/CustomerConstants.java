@@ -43,6 +43,6 @@ public class CustomerConstants {
 	public static final String CUSTOMER_WITH_IDENTIFICATION_DOCUMENT_ALREADY_EXIST_ERROR_MESSAGE = "Already exist a customer with the Identification Document: '{}'";
 
 	public static final int CUSTOMER_WITH_IDENTIFICATION_DOCUMENT_NOT_FOUND_ERROR_CODE = 0;
-	public static final String CUSTOMER_WITH_IDENTIFICATION_DOCUMENT_NOT_FOUND_ERROR_MESSAGE = "Not found customer with Identification Document: '{}'";
+	public static final String CUSTOMER_WITH_IDENTIFICATION_DOCUMENT_NOT_FOUND_ERROR_MESSAGE = "Not found customer with ID: '{}'";
 	
 }

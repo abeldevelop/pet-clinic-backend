@@ -27,6 +27,11 @@ public class PetRepositoryImpl implements PetRepository {
 	public Optional<PetEntity> executeFindById(Integer petId) {
 		return petSpringDataRepository.findById(petId);
 	}
+
+	@Override
+	public void executeDelete(PetEntity petEntity) {
+		petSpringDataRepository.delete(petEntity);
+	}
 	
 	@Override
 	public Optional<PetEntity> executeFindByIdAndCustomer(Integer petId, CustomerEntity customerEntity) {
